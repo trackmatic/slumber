@@ -2,8 +2,8 @@
 <package >
   <metadata>
     <id>Slumber</id>
-    <version>0.0.1</version>
-    <title>Nap</title>
+    <version>0.0.2</version>
+    <title>Slumber</title>
     <authors>Trackmatic Solutions (Pty) Ltd</authors>
     <owners>Trackmatic Solutions (Pty) Ltd</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
