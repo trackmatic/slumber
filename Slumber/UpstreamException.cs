@@ -1,6 +1,6 @@
 ﻿namespace Slumber
 {
-    public class UpstreamException : NapException
+    public class UpstreamException : SlumberException
     {
 
         public UpstreamException(string content)

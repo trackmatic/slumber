@@ -30,11 +30,12 @@ Task Publish-Nuget-Package {
     copy-item "$base_dir/Slumber.Nuget/Slumber.nuspec" "$package_dir/Slumber.nuspec"
 
     # Copy libraries to package folders
-    get-childitem "$base_dir/Slumber.Nuget/bin/Debug" | ? { $_.Name -like "Slumber.*.dll" -and $_.Name } | % { copy-item $_.FullName "$package_dir/lib/net45" }
+    get-childitem "$base_dir/Slumber.Nuget/bin/Debug" | ? { $_.Name -like "Slumber*.dll" -and $_.Name } | % { copy-item $_.FullName "$package_dir/lib/net45" }
 
     # Create nuget package and upload to nuget
 	exec { & $nuget pack "$package_dir/Slumber.nuspec" }
-	exec { & $nuget setApiKey 70fa6578-9eae-47a3-8a77-1965fff3ae98 }
+    $apikey = Read-Host -Prompt 'Enter Api Key'
+    exec { & $nuget setApiKey $apikey }
 	exec { & $nuget push "$package" }
 
     # Perform some cleanup on the folder

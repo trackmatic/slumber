@@ -64,7 +64,7 @@ namespace Slumber.Http
                 var contentType = request.GetHeader(Slumber.HttpHeaders.ContentType);
                 if (contentType == null)
                 {
-                    throw new NapException("Content-Type header is required when data is present");
+                    throw new SlumberException("Content-Type header is required when data is present");
                 }
                 webRequest.ContentType = contentType.Value;
             }

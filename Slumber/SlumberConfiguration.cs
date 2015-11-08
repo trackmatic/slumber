@@ -27,22 +27,22 @@ namespace Slumber
         {
             if (Http == null)
             {
-                throw new NapException("Http has not been set");
+                throw new SlumberException("Http has not been set");
             }
 
             if (UriEncoder == null)
             {
-                throw new NapException("UriEncoder has not been set");
+                throw new SlumberException("UriEncoder has not been set");
             }
 
             if (Serialization == null)
             {
-                throw new NapException("Serialization has not been set");
+                throw new SlumberException("Serialization has not been set");
             }
 
             if (Log == null)
             {
-                throw new NapException("Log has not been set");
+                throw new SlumberException("Log has not been set");
             }
         }
     }

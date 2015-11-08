@@ -8,9 +8,9 @@ namespace Slumber.Sample
     {
         static void Main(string[] args)
         {
-            var client = new SlumberClient("https://rest.trackmatic.co.za/api/v1", nap =>
+            var client = new SlumberClient("https://someurl.com/api/v1", slumber =>
             {
-                nap.UseJsonSerialization().UseHttp(http => http.ApplicationJson()).UseConsoleLogger();
+                slumber.UseJsonSerialization().UseHttp(http => http.ApplicationJson()).UseConsoleLogger();
             });
         }
     }

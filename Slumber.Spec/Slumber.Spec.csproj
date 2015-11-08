@@ -66,7 +66,7 @@
       <Project>{3f45dc3c-be0f-411c-badb-02c3ce8d4204}</Project>
       <Name>Slumber.Logging</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Nap.Xml\Slumber.Xml.csproj">
+    <ProjectReference Include="..\Slumber.Xml\Slumber.Xml.csproj">
       <Project>{b0660a2f-631c-4299-94a7-3f83d298ede8}</Project>
       <Name>Slumber.Xml</Name>
     </ProjectReference>
