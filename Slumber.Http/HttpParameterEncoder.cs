@@ -1,9 +1,19 @@
-﻿using System.Web;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 
 namespace Slumber.Http
 {
     public class HttpParameterEncoder : IParameterEncoder
     {
+        private readonly List<IEncoder> _encoders;
+
+        public HttpParameterEncoder()
+        {
+            _encoders = new List<IEncoder> {new BooleanEncoder(), new HttpUtilityEncoder()};
+        }
+
         public string Encode(string path, RestQueryParameter parameter)
         {
             return path.Replace($"{{{parameter.Name}}}", Encode(parameter.Value));
@@ -14,13 +24,47 @@ namespace Slumber.Http
             return $"{parameter.Name}={Encode(parameter.Value)}";
         }
 
-        private static string Encode(object value)
+        private string Encode(object value)
         {
             if (value == null)
             {
                 return string.Empty;
             }
-            return HttpUtility.UrlEncode(value.ToString());
+
+            return _encoders.Aggregate(value.ToString(), (current, encoder) => encoder.Encode(current));
+        }
+
+        private interface IEncoder
+        {
+            string Encode(object value);
+
+            bool IsApplicable(Type type);
+        }
+
+        private class BooleanEncoder : IEncoder
+        {
+            public string Encode(object value)
+            {
+                return value.ToString().ToLower();
+            }
+
+            public bool IsApplicable(Type type)
+            {
+                return type == typeof (bool);
+            }
+        }
+
+        private class HttpUtilityEncoder : IEncoder
+        {
+            public string Encode(object value)
+            {
+                return HttpUtility.UrlEncode(value.ToString());
+            }
+
+            public bool IsApplicable(Type type)
+            {
+                return true;
+            }
         }
     }
 }
