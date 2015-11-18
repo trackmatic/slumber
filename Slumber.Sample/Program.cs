@@ -1,4 +1,6 @@
-﻿using Slmber.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
+using Slmber.Json;
 using Slumber.Http;
 using Slumber.Logging;
 
@@ -8,10 +10,34 @@ namespace Slumber.Sample
     {
         static void Main(string[] args)
         {
-            var client = new SlumberClient("https://someurl.com/api/v1", slumber =>
+            var client = new SlumberClient("http://api.fixer.io", slumber =>
             {
                 slumber.UseJsonSerialization().UseHttp(http => http.ApplicationJson()).UseConsoleLogger();
             });
+
+            // Using Dynamic Types
+
+            var dynamicRequest = HttpRequestBuilder<dynamic>.Get("/latest").QueryParameter("base", "USD").Build();
+
+            var dynamicResult = client.Execute(dynamicRequest);
+
+            // Using Defined Types
+
+            var typedRequest = HttpRequestBuilder<ExchangeRates>.Get("/latest").QueryParameter("base", "USD").Build();
+
+            var typesResult = client.Execute(typedRequest);
+        }
+
+        public class ExchangeRates
+        {
+            [JsonProperty("base")]
+            public string Base { get; set; }
+
+            [JsonProperty("date")]
+            public string Date { get; set; }
+
+            [JsonProperty("rates")]
+            public Dictionary<string, double> Rates { get; set; }
         }
     }
 }

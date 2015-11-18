@@ -7,3 +7,15 @@ Slumber is a modular rest client library which allows you to swap out each compo
 ## Install With NuGet
 
     install-package Slumber
+
+## Create a Slumber Client
+
+    var client = new SlumberClient("http://api.fixer.io", slumber =>
+    {
+        slumber.UseJsonSerialization().UseHttp(http => http.ApplicationJson()).UseConsoleLogger();
+    });
+
+## Create and Execute a Request
+
+    var request = HttpRequestBuilder<dynamic>.Get("/latest").QueryParameter("base", "USD").Build(); 
+    var response = client.Execute(request);

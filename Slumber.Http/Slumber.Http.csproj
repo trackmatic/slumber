@@ -48,6 +48,7 @@
     <Compile Include="HttpParameterEncoder.cs" />
     <Compile Include="HttpGet.cs" />
     <Compile Include="HttpPost.cs" />
+    <Compile Include="HttpRequestBuilder.cs" />
     <Compile Include="IHttpMethod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Http.cs" />
