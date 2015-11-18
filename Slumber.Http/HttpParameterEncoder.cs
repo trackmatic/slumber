@@ -31,7 +31,7 @@ namespace Slumber.Http
                 return string.Empty;
             }
 
-            return _encoders.Aggregate(value.ToString(), (current, encoder) => encoder.Encode(current));
+            return _encoders.Where(x => x.IsApplicable(value.GetType())).Aggregate(value.ToString(), (current, encoder) => encoder.Encode(current));
         }
 
         private interface IEncoder
