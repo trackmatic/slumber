@@ -69,6 +69,10 @@ namespace Slumber.Http
 
         public void Add(HttpHeader header)
         {
+            if (_headers.ContainsKey(header.Name))
+            {
+                return;
+            }
             _headers.Add(header.Name, header);
         }
 
