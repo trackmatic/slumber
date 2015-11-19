@@ -127,7 +127,7 @@ namespace Slumber.Http
 
                     var http = new RestResponse<T>
                     {
-                        StatusCode = (int)e.Status
+                        StatusCode = (int)((HttpWebResponse)e.Response).StatusCode
                     };
                     if (string.IsNullOrEmpty(content))
                     {
