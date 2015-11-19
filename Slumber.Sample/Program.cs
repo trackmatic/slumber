@@ -10,10 +10,22 @@ namespace Slumber.Sample
     {
         static void Main(string[] args)
         {
-            var client = new SlumberClient("http://api.fixer.io", slumber =>
+            var client = new SlumberClient("http://10.10.0.76:8001", slumber =>
             {
                 slumber.UseJsonSerialization().UseHttp(http => http.ApplicationJson()).UseConsoleLogger();
             });
+
+            var request = HttpRequestBuilder<dynamic>.Post("/apis").Content(new
+            {
+                name = "api/v1/avt",
+                upstream_url = "http://avt.trackmatic.co.za",
+                preserve_host = false,
+                created_at = 0,
+                request_path = "/api/v2/avt",
+                enabled = true
+            }).Build();
+
+            client.Execute(request);
 
             // Using Dynamic Types
 

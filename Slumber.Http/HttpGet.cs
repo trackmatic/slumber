@@ -21,9 +21,9 @@ namespace Slumber.Http
             var uri = _configuration.UriEncoder.Encode(request);
             var webRequest = NewWebRequest(request, uri);
             _configuration.Log.Debug(@"GET {0}", uri);
-            var webResponse = await webRequest.GetResponseAsync();
             try
             {
+                var webResponse = await webRequest.GetResponseAsync();
                 return webResponse.CreateResponse<T>(_deserializer);
             }
             catch (Exception e)

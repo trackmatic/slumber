@@ -23,18 +23,18 @@ namespace Slumber.Http
         public async Task<IRestResponse<T>> Execute<T>(IRestRequest request)
         {
             var webRequest = CreateWebRequest(request);
-            var stream = await webRequest.GetRequestStreamAsync();
             try
             {
+                var stream = await webRequest.GetRequestStreamAsync();
                 WriteToStream(stream, request);
             }
             catch (Exception e)
             {
                 return e.CreateException<T>();
             }
-            var webResponse = await webRequest.GetResponseAsync();
             try
             {
+                var webResponse = await webRequest.GetResponseAsync();
                 return webResponse.CreateResponse<T>(_deserializer);
             }
             catch (Exception e)
