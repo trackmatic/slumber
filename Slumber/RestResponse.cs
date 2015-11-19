@@ -11,6 +11,7 @@ namespace Slumber
         public RestResponse()
         {
             _headers = new List<HttpHeader>();
+            StatusCode = -1;
         }
 
         public int StatusCode { get; set; }
@@ -26,13 +27,12 @@ namespace Slumber
             return _headers.Single(x => x.Name == name);
         }
 
-        public bool HasError => StatusCode >= 400;
+        public bool HasError => StatusCode == -1 || StatusCode >= 400;
 
         public T Data { get; set; }
 
         public void SetException(Exception e)
         {
-            StatusCode = -1;
             Exception = e;
         }
     }
