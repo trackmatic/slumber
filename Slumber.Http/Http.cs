@@ -56,19 +56,19 @@ namespace Slumber.Http
             return this;
         }
 
-        public Http ApplicationJson()
+        public Http UseJsonAsDefaultContentType()
         {
-            Application("application/json");
+            SetDefaultContentType("application/json");
             return this;
         }
 
-        public Http ApplicationXml()
+        public Http UseXmlAsDefaultContentType()
         {
-            Application("application/xml");
+            SetDefaultContentType("application/xml");
             return this;
         }
 
-        public Http Application(string type)
+        public Http SetDefaultContentType(string type)
         {
             _headers.Register(HttpMethods.Get, HttpHeader.Accept(type));
             _headers.Register(HttpMethods.Post, HttpHeader.ContentType(type));

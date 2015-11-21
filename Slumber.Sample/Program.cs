@@ -12,7 +12,7 @@ namespace Slumber.Sample
         {
             var client = new SlumberClient("http://10.10.0.76:8001", slumber =>
             {
-                slumber.UseJsonSerialization().UseHttp(http => http.ApplicationJson()).UseConsoleLogger();
+                slumber.UseJsonSerialization().UseHttp(http => http.UseJsonAsDefaultContentType()).UseConsoleLogger();
             });
 
             var request = HttpRequestBuilder<dynamic>.Post("/apis").Content(new
