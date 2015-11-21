@@ -14,19 +14,7 @@ namespace Slumber.Sample
             {
                 slumber.UseJsonSerialization().UseHttp(http => http.UseJsonAsDefaultContentType()).UseConsoleLogger();
             });
-
-            var request = HttpRequestBuilder<dynamic>.Post("/apis").Content(new
-            {
-                name = "api/v1/avt",
-                upstream_url = "http://avt.trackmatic.co.za",
-                preserve_host = false,
-                created_at = 0,
-                request_path = "/api/v2/avt",
-                enabled = true
-            }).Build();
-
-            client.Execute(request);
-
+            
             // Using Dynamic Types
 
             var dynamicRequest = HttpRequestBuilder<dynamic>.Get("/latest").QueryParameter("base", "USD").Build();
