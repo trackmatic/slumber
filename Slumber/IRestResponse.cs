@@ -10,8 +10,8 @@ namespace Slumber
         string Content { get; set; }
 
         IList<HttpHeader> Headers { get; }
-        
-        Exception Exception { get; }
+
+        SlumberException Exception { get; }
 
         HttpHeader GetHeader(string name);
 

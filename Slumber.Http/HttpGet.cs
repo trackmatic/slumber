@@ -28,7 +28,8 @@ namespace Slumber.Http
             }
             catch (Exception e)
             {
-                return e.CreateException<T>();
+                var handler = new ErrorHandler(_deserializer);
+                return handler.Handle<T>(e);
             }
         }
 

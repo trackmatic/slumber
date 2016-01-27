@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Slumber
@@ -8,9 +7,12 @@ namespace Slumber
     {
         private readonly List<HttpHeader> _headers;
 
-        public RestResponse()
+        private readonly IDeserializer _deserializer;
+
+        public RestResponse(IDeserializer deserializer)
         {
             _headers = new List<HttpHeader>();
+            _deserializer = deserializer;
             StatusCode = -1;
         }
 
@@ -20,7 +22,7 @@ namespace Slumber
 
         public IList<HttpHeader> Headers => _headers;
 
-        public Exception Exception { get; private set; }
+        public SlumberException Exception { get; private set; }
 
         public HttpHeader GetHeader(string name)
         {
@@ -29,9 +31,30 @@ namespace Slumber
 
         public bool HasError => StatusCode == -1 || StatusCode >= 400;
 
-        public T Data { get; set; }
+        public T Data
+        {
+            get
+            {
+                if (HasError)
+                {
+                    throw Exception;
+                }
 
-        public void SetException(Exception e)
+                if (string.IsNullOrEmpty(Content))
+                {
+                    throw new SlumberException("The response does not contain any content");
+                }
+
+                return _deserializer.Deserialize<T>(Content);
+            }
+        }
+
+        public TErrorType GetErrorData<TErrorType>()
+        {
+            return Exception.GetContent<TErrorType>(_deserializer);
+        }
+        
+        public void SetException(SlumberException e)
         {
             Exception = e;
         }

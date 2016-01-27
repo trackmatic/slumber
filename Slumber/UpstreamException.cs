@@ -10,5 +10,10 @@
         }
 
         public string Content { get; }
+
+        public override T GetContent<T>(IDeserializer deserializer)
+        {
+            return deserializer.Deserialize<T>(Content);
+        }
     }
 }

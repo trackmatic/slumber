@@ -58,7 +58,7 @@ namespace Slumber.Http
 
         public static RestResponse<T> CreateResponse<T>(this WebResponse webResponse, IDeserializer deserializer)
         {
-            var http = new RestResponse<T>();
+            var http = new RestResponse<T>(deserializer);
             try
             {
                 foreach (var name in webResponse.Headers.AllKeys)
@@ -77,11 +77,7 @@ namespace Slumber.Http
                         var httpWebResponse = (HttpWebResponse)webResponse;
                         http.Content = reader.ReadToEnd();
                         http.StatusCode = (int)httpWebResponse.StatusCode;
-                        if (!http.HasError)
-                        {
-                            http.Data = deserializer.Deserialize<T>(http.Content);
-                        }
-                        else
+                        if (http.HasError)
                         {
                             http.SetException(new UpstreamException(http.Content));
                         }
@@ -90,62 +86,8 @@ namespace Slumber.Http
             }
             catch (Exception e)
             {
-                http.SetException(e);
+                http.SetException(new SlumberException(e));
             }
-            return http;
-        }
-
-        public static RestResponse<T> CreateException<T>(this Exception e)
-        {
-            try
-            {
-                return e is WebException ? NewResponseFromWebException<T>(e as WebException) : NewResponseFromException<T>(e);
-            }
-            catch (Exception ex)
-            {
-                return NewResponseFromException<T>(ex);
-            }
-        }
-
-        private static RestResponse<T> NewResponseFromWebException<T>(WebException e)
-        {
-            if (e.Response == null)
-            {
-                return NewResponseFromException<T>(e);
-            }
-
-            using (var stream = e.Response.GetResponseStream())
-            {
-                if (stream == null)
-                {
-                    return NewResponseFromException<T>(e);
-                }
-
-                using (var reader = new StreamReader(stream))
-                {
-                    var content = reader.ReadToEnd();
-
-                    var http = new RestResponse<T>
-                    {
-                        StatusCode = (int)((HttpWebResponse)e.Response).StatusCode
-                    };
-                    if (string.IsNullOrEmpty(content))
-                    {
-                        http.SetException(e);
-                    }
-                    else
-                    {
-                        http.SetException(new UpstreamException(content));
-                    }
-                    return http;
-                }
-            }
-        }
-
-        private static RestResponse<T> NewResponseFromException<T>(Exception e)
-        {
-            var http = new RestResponse<T>();
-            http.SetException(e);
             return http;
         }
     }

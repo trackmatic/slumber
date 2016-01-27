@@ -2,6 +2,8 @@
 {
     public interface IRestResponse<T> : IRestResponse
     {
-        T Data { get; set; }
+        T Data { get; }
+
+        TErrorType GetErrorData<TErrorType>();
     }
 }
