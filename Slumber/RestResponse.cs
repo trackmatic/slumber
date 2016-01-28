@@ -51,6 +51,11 @@ namespace Slumber
 
         public TErrorType GetErrorData<TErrorType>()
         {
+            if (Exception == null)
+            {
+                throw new SlumberException("There is no exception to get content from");
+            }
+
             return Exception.GetContent<TErrorType>(_deserializer);
         }
         
