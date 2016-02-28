@@ -10,7 +10,7 @@ namespace Slumber.Sample
     {
         static void Main(string[] args)
         {
-            var client = new SlumberClient("http://10.10.0.76:8001", slumber =>
+            var client = new SlumberClient("http://api.fixer.io", slumber =>
             {
                 slumber.UseJsonSerialization().UseHttp(http => http.UseJsonAsDefaultContentType()).UseConsoleLogger();
             });
@@ -19,13 +19,13 @@ namespace Slumber.Sample
 
             var dynamicRequest = HttpRequestBuilder<dynamic>.Get("/latest").QueryParameter("base", "USD").Build();
 
-            var dynamicResult = client.Execute(dynamicRequest);
+            var dynamicResult = client.ExecuteAsync(dynamicRequest).Result;
 
             // Using Defined Types
 
             var typedRequest = HttpRequestBuilder<ExchangeRates>.Get("/latest").QueryParameter("base", "USD").Build();
 
-            var typesResult = client.Execute(typedRequest);
+            var typesResult = client.ExecuteAsync(typedRequest).Result;
         }
 
         public class ExchangeRates
