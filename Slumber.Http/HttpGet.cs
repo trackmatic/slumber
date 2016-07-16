@@ -16,7 +16,7 @@ namespace Slumber.Http
             _deserializer = configuration.Serialization.CreateDeserializer();
         }
 
-        public async Task<IResponse<T>> Execute<T>(IRestRequest request)
+        public async Task<IResponse<T>> Execute<T>(IRequest request)
         {
             var uri = _configuration.UriEncoder.Encode(request);
             var webRequest = NewWebRequest(request, uri);
@@ -33,7 +33,7 @@ namespace Slumber.Http
             }
         }
 
-        protected virtual HttpWebRequest NewWebRequest(IRestRequest request, string uri)
+        protected virtual HttpWebRequest NewWebRequest(IRequest request, string uri)
         {
             var webRequest = WebRequest.Create(_configuration.BaseUri.Trim('/') + uri);
             if (_configuration.Timeout > TimeSpan.Zero)

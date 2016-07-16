@@ -18,7 +18,7 @@ namespace Slumber.Http
             _deserializer = configuration.Serialization.CreateDeserializer();
         }
 
-        public async Task<IResponse<T>> Execute<T>(IRestRequest request)
+        public async Task<IResponse<T>> Execute<T>(IRequest request)
         {
             var webRequest = CreateWebRequest(request);
             try
@@ -35,7 +35,7 @@ namespace Slumber.Http
             }
         }
 
-        private void WriteToStream(Stream stream, IRestRequest request)
+        private void WriteToStream(Stream stream, IRequest request)
         {
             var uri = _configuration.UriEncoder.Encode(request);
             using (var writer = new StreamWriter(stream))
@@ -46,7 +46,7 @@ namespace Slumber.Http
             }
         }
 
-        private WebRequest CreateWebRequest(IRestRequest request)
+        private WebRequest CreateWebRequest(IRequest request)
         {
             var uri = _configuration.UriEncoder.Encode(request);
             var webRequest = WebRequest.Create(_configuration.BaseUri.Trim('/') + uri);

@@ -2,6 +2,6 @@
 {
     public interface IUriEncoder
     {
-        string Encode(IRestRequest request);
+        string Encode(IRequest request);
     }
 }

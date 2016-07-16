@@ -2,7 +2,7 @@
 {
     public class HttpCookiesPreProcessor : IHttpPreProcessor
     {
-        public void Process(IHttp http, IRestRequest request)
+        public void Process(IHttp http, IRequest request)
         {
             foreach (var cookie in http.GetCookies())
             {

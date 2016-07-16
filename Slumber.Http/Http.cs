@@ -21,7 +21,10 @@ namespace Slumber.Http
             _methods = methods;
             _headers = new HttpHeaders();
             _cookies = new HttpCookies();
-            _postProcessors = new List<IHttpPostProcessor> {new HttpCookiesPostProcessor()};
+            _postProcessors = new List<IHttpPostProcessor>
+            {
+                new HttpCookiesPostProcessor()
+            };
             _preProcessors = new List<IHttpPreProcessor>
             {
                 new HttpHeadersPreProcessor(),
@@ -29,12 +32,9 @@ namespace Slumber.Http
             };
         }
 
-        public Task<IResponse<T>> Execute<T>(IRestRequest request)
+        public Task<IResponse<T>> Execute<T>(IRequest request)
         {
-            if (!_methods.ContainsKey(request.Method))
-            {
-                throw new SlumberException("Http method not supported");
-            }
+            EnsureMethodIsSupported(request.Method);
             OnBeforeProcess(request);
             var method = _methods[request.Method];
             var task = method.Execute<T>(request).ContinueWith(x =>
@@ -46,7 +46,15 @@ namespace Slumber.Http
             return task;
         }
 
-        private void OnBeforeProcess(IRestRequest request)
+        private void EnsureMethodIsSupported(string method)
+        {
+            if (!_methods.ContainsKey(method))
+            {
+                throw new SlumberException($"Http method '{method}' not supported");
+            }
+        }
+
+        private void OnBeforeProcess(IRequest request)
         {
             foreach (var processor in _preProcessors)
             {
@@ -54,7 +62,7 @@ namespace Slumber.Http
             }
         }
 
-        private void OnAfterProcess(IRestRequest request, IResponse response)
+        private void OnAfterProcess(IRequest request, IResponse response)
         {
             foreach (var processor in _postProcessors)
             {

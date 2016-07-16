@@ -4,6 +4,6 @@ namespace Slumber.Http
 {
     public interface IHttpMethod
     {
-        Task<IResponse<T>> Execute<T>(IRestRequest request);
+        Task<IResponse<T>> Execute<T>(IRequest request);
     }
 }

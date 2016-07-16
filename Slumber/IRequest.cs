@@ -6,7 +6,7 @@ namespace Slumber
     /// <summary>
     /// Abstraction of a rest request
     /// </summary>
-    public interface IRestRequest
+    public interface IRequest
     {
         /// <summary>
         /// The path to the resource being worked on

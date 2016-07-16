@@ -12,7 +12,7 @@ namespace Slumber.Spec.Specs
             it["should build up a valid url"] = () =>
             {
                 var restQueryParameterEncoder = new HttpParameterEncoder();
-                var request = new Mock<IRestRequest>();
+                var request = new Mock<IRequest>();
                 request.Setup(x => x.Query).Returns(new List<QueryParameter>
                 {
                     new QueryParameter

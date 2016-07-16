@@ -20,7 +20,7 @@ namespace Slumber
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public string Encode(IRestRequest request)
+        public string Encode(IRequest request)
         {
             var sb = new StringBuilder();
             var query = request.Query.ToList();

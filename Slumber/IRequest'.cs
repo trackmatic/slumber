@@ -4,7 +4,7 @@
     /// Generic rest request
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IRequest<T> : IRestRequest
+    public interface IRequest<T> : IRequest
     {
     }
 }
