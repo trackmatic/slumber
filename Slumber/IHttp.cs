@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Slumber
 {
@@ -8,5 +9,13 @@ namespace Slumber
     public interface IHttp
     {
         Task<IRestResponse<T>> Execute<T>(IRestRequest request);
+
+        IHttp Add(HttpCookie cookie);
+
+        IHttp Add(string method, HttpHeader header);
+
+        IEnumerable<HttpCookie> GetCookies();
+
+        IEnumerable<HttpHeader> GetHeaders(string method);
     }
 }

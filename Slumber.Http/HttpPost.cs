@@ -8,9 +8,7 @@ namespace Slumber.Http
     public class HttpPost : IHttpMethod
     {
         private readonly ISlumberConfiguration _configuration;
-
         private readonly ISerializer _serializer;
-
         private readonly IDeserializer _deserializer;
 
         public HttpPost(ISlumberConfiguration configuration)
@@ -27,14 +25,6 @@ namespace Slumber.Http
             {
                 var stream = await webRequest.GetRequestStreamAsync();
                 WriteToStream(stream, request);
-            }
-            catch (Exception e)
-            {
-                var handler = new ErrorHandler(_deserializer);
-                return handler.Handle<T>(e);
-            }
-            try
-            {
                 var webResponse = await webRequest.GetResponseAsync();
                 return webResponse.CreateResponse<T>(_deserializer);
             }

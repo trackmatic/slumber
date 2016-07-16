@@ -4,6 +4,7 @@ namespace Slumber.Http
 {
     public class HttpHeaders
     {
+        private static readonly List<HttpHeader> Empty = new List<HttpHeader>();
         private readonly Dictionary<string, List<HttpHeader>> _headers;
 
         public HttpHeaders()
@@ -20,21 +21,15 @@ namespace Slumber.Http
             _headers[method].Add(header);
         }
 
-        public void Append(IRestRequest request)
+        public IEnumerable<HttpHeader> this[string method]
         {
-            if (!_headers.ContainsKey(request.Method))
+            get
             {
-                return;
-            }
-
-            foreach (var header in _headers[request.Method])
-            {
-                if (request.Contains(header))
+                if (!_headers.ContainsKey(method))
                 {
-                    continue;
+                    return Empty;
                 }
-
-                request.Add(header);
+                return _headers[method];
             }
         }
     }

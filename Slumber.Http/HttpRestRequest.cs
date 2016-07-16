@@ -6,9 +6,7 @@ namespace Slumber.Http
     public class HttpRestRequest<T> : IRestRequest<T>
     {
         private readonly List<RestQueryParameter> _queryParameters;
-
         private readonly Dictionary<string, HttpHeader> _headers;
-
         private readonly List<HttpCookie> _cookies;
 
         public HttpRestRequest(string path, string method)

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Slumber
 {
@@ -14,6 +13,8 @@ namespace Slumber
         SlumberException Exception { get; }
 
         HttpHeader GetHeader(string name);
+
+        bool ContainsHeader(string name);
 
         bool HasError { get; }
     }

@@ -29,6 +29,11 @@ namespace Slumber
             return _headers.Single(x => x.Name == name);
         }
 
+        public bool ContainsHeader(string name)
+        {
+            return _headers.Any(x => x.Name == name);
+        }
+
         public bool HasError => StatusCode == -1 || StatusCode >= 400;
 
         public T Data

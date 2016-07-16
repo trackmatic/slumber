@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Slumber;
 
@@ -6,25 +7,26 @@ namespace Slmber.Json
 {
     public class JsonSerializerFactory : ISerializationFactory
     {
-        private static readonly JsonSerializerSettings Settings;
+        private readonly JsonSerializerSettings _settings;
 
-        static JsonSerializerFactory()
+        public JsonSerializerFactory(Action<JsonSerializerSettings> customise = null)
         {
-            Settings = new JsonSerializerSettings
+            _settings = new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             };
-            Settings.Converters.Add(new IsoDateTimeConverter());
+            _settings.Converters.Add(new IsoDateTimeConverter());
+            customise?.Invoke(_settings);
         }
 
         public ISerializer CreateSerializer()
         {
-            return new DynamicJsonSerializer(Settings);
+            return new DynamicJsonSerializer(_settings);
         }
 
         public IDeserializer CreateDeserializer()
         {
-            return new DynamicJsonDeserializer(Settings);
+            return new DynamicJsonDeserializer(_settings);
         }
     }
 }
