@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Slumber
 {
     /// <summary>
-    /// Abstraction of a rest request
+    /// Abstraction of an http request
     /// </summary>
     public interface IRequest
     {

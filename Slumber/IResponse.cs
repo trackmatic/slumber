@@ -2,6 +2,9 @@
 
 namespace Slumber
 {
+    /// <summary>
+    /// An abstraction of an http response
+    /// </summary>
     public interface IResponse
     {
         int StatusCode { get; }

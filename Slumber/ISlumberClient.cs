@@ -3,7 +3,7 @@
 namespace Slumber
 {
     /// <summary>
-    /// Abstraction of a Nap Client
+    /// Abstraction of a Slumber Client
     /// </summary>
     public interface ISlumberClient
     {
