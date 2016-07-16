@@ -2,7 +2,7 @@
 
 namespace Slumber.Http
 {
-    public class HttpAppendHeadersPreProcessor : IHttpPreProcessor
+    public class HttpHeadersPreProcessor : IHttpPreProcessor
     {
         public void Process(IHttp http, IRestRequest request)
         {

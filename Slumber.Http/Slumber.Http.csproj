@@ -44,9 +44,9 @@
     <Compile Include="ConfigurationExtensions.cs" />
     <Compile Include="ErrorHandler.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="HttpAppendCookiesPreProcessor.cs" />
-    <Compile Include="HttpAppendHeadersPreProcessor.cs" />
-    <Compile Include="HttpCookiePostProcessor.cs" />
+    <Compile Include="HttpCookiesPreProcessor.cs" />
+    <Compile Include="HttpHeadersPreProcessor.cs" />
+    <Compile Include="HttpCookiesPostProcessor.cs" />
     <Compile Include="HttpCookies.cs" />
     <Compile Include="HttpHeaders.cs" />
     <Compile Include="HttpParameterEncoder.cs" />

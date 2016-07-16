@@ -21,11 +21,11 @@ namespace Slumber.Http
             _methods = methods;
             _headers = new HttpHeaders();
             _cookies = new HttpCookies();
-            _postProcessors = new List<IHttpPostProcessor> {new HttpCookiePostProcessor()};
+            _postProcessors = new List<IHttpPostProcessor> {new HttpCookiesPostProcessor()};
             _preProcessors = new List<IHttpPreProcessor>
             {
-                new HttpAppendHeadersPreProcessor(),
-                new HttpAppendCookiesPreProcessor()
+                new HttpHeadersPreProcessor(),
+                new HttpCookiesPreProcessor()
             };
         }
 
