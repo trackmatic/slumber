@@ -42,10 +42,10 @@
     <Compile Include="ISlumberClient.cs" />
     <Compile Include="ISlumberConfiguration.cs" />
     <Compile Include="IParameterEncoder.cs" />
-    <Compile Include="IRestRequest%27.cs" />
-    <Compile Include="IRestRequest.cs" />
-    <Compile Include="IRestResponse%27.cs" />
-    <Compile Include="IRestResponse.cs" />
+    <Compile Include="IRequest%27.cs" />
+    <Compile Include="IRequest.cs" />
+    <Compile Include="IResponse%27.cs" />
+    <Compile Include="IResponse.cs" />
     <Compile Include="ISerializer.cs" />
     <Compile Include="ISerializationFactory.cs" />
     <Compile Include="IUriEncoder.cs" />
@@ -58,8 +58,8 @@
     <Compile Include="HttpHeader.cs" />
     <Compile Include="HttpHeaders.cs" />
     <Compile Include="HttpMethods.cs" />
-    <Compile Include="RestQueryParameter.cs" />
-    <Compile Include="RestResponse.cs" />
+    <Compile Include="QueryParameter.cs" />
+    <Compile Include="Response.cs" />
     <Compile Include="UpstreamException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

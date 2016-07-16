@@ -18,7 +18,7 @@ namespace Slumber
             configure(_configuration);
         }
 
-        public Task<IRestResponse<T>> ExecuteAsync<T>(IRestRequest<T> request)
+        public Task<IResponse<T>> ExecuteAsync<T>(IRequest<T> request)
         {
             _configuration.Validate();
             return _configuration.Http.Execute<T>(request);

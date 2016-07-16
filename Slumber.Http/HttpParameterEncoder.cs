@@ -14,12 +14,12 @@ namespace Slumber.Http
             _encoders = new List<IEncoder> {new BooleanEncoder(), new HttpUtilityEncoder()};
         }
 
-        public string Encode(string path, RestQueryParameter parameter)
+        public string Encode(string path, QueryParameter parameter)
         {
             return path.Replace($"{{{parameter.Name}}}", Encode(parameter.Value));
         }
 
-        public string Encode(RestQueryParameter parameter)
+        public string Encode(QueryParameter parameter)
         {
             return $"{parameter.Name}={Encode(parameter.Value)}";
         }

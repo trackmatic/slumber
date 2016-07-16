@@ -8,7 +8,7 @@ namespace Slumber
     /// </summary>
     public interface IHttp
     {
-        Task<IRestResponse<T>> Execute<T>(IRestRequest request);
+        Task<IResponse<T>> Execute<T>(IRestRequest request);
 
         IHttp Add(HttpCookie cookie);
 

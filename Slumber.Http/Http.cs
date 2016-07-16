@@ -29,7 +29,7 @@ namespace Slumber.Http
             };
         }
 
-        public Task<IRestResponse<T>> Execute<T>(IRestRequest request)
+        public Task<IResponse<T>> Execute<T>(IRestRequest request)
         {
             if (!_methods.ContainsKey(request.Method))
             {
@@ -54,7 +54,7 @@ namespace Slumber.Http
             }
         }
 
-        private void OnAfterProcess(IRestRequest request, IRestResponse response)
+        private void OnAfterProcess(IRestRequest request, IResponse response)
         {
             foreach (var processor in _postProcessors)
             {

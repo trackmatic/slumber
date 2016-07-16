@@ -10,7 +10,7 @@ namespace Slumber.Spec.Specs.Http
             it["should encode the query parameter with HttpUtility.UrlEncode functionality"] = () =>
             {
                 var encoder = new HttpParameterEncoder();
-                var parameter = new RestQueryParameter
+                var parameter = new QueryParameter
                 {
                     Name = "key",
                     Value = "some value"

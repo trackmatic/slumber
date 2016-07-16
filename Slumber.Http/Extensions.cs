@@ -56,9 +56,9 @@ namespace Slumber.Http
             }
         }
 
-        public static RestResponse<T> CreateResponse<T>(this WebResponse webResponse, IDeserializer deserializer)
+        public static Response<T> CreateResponse<T>(this WebResponse webResponse, IDeserializer deserializer)
         {
-            var http = new RestResponse<T>(deserializer);
+            var http = new Response<T>(deserializer);
             try
             {
                 foreach (var name in webResponse.Headers.AllKeys)

@@ -13,24 +13,24 @@ namespace Slumber.Spec.Specs
             {
                 var restQueryParameterEncoder = new HttpParameterEncoder();
                 var request = new Mock<IRestRequest>();
-                request.Setup(x => x.Query).Returns(new List<RestQueryParameter>
+                request.Setup(x => x.Query).Returns(new List<QueryParameter>
                 {
-                    new RestQueryParameter
+                    new QueryParameter
                     {
                         Name = "p1",
                         Value = "a"
                     },
-                    new RestQueryParameter
+                    new QueryParameter
                     {
                         Name = "p2",
                         Value = "b"
                     },
-                    new RestQueryParameter
+                    new QueryParameter
                     {
                         Name = "p3",
                         Value = "c"
                     },
-                    new RestQueryParameter
+                    new QueryParameter
                     {
                         Name = "p4",
                         Value = "d"

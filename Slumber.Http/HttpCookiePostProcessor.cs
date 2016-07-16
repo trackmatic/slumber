@@ -4,7 +4,7 @@ namespace Slumber.Http
 {
     public class HttpCookiePostProcessor : IHttpPostProcessor
     {
-        public void Process(IHttp http, IRestRequest request, IRestResponse response)
+        public void Process(IHttp http, IRestRequest request, IResponse response)
         {
             foreach (var header in response.Headers.Where(x => x.Name == Slumber.HttpHeaders.SetCookie))
             {

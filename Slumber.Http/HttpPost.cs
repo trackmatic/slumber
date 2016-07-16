@@ -18,7 +18,7 @@ namespace Slumber.Http
             _deserializer = configuration.Serialization.CreateDeserializer();
         }
 
-        public async Task<IRestResponse<T>> Execute<T>(IRestRequest request)
+        public async Task<IResponse<T>> Execute<T>(IRestRequest request)
         {
             var webRequest = CreateWebRequest(request);
             try

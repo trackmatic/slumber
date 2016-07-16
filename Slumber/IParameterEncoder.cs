@@ -11,13 +11,13 @@
         /// <param name="path"></param>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        string Encode(string path, RestQueryParameter parameter);
+        string Encode(string path, QueryParameter parameter);
 
         /// <summary>
         /// Encodes query parameters
         /// </summary>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        string Encode(RestQueryParameter parameter);
+        string Encode(QueryParameter parameter);
     }
 }

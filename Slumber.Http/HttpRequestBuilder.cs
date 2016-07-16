@@ -27,37 +27,37 @@
 
         public static HttpRequestBuilder<T> New(string path, string method)
         {
-            return new HttpRequestBuilder<T>(new HttpRestRequest<T>(path, method));
+            return new HttpRequestBuilder<T>(new HttpRequest<T>(path, method));
         }
 
-        private readonly HttpRestRequest<T> _request;
+        private readonly HttpRequest<T> _httpRequest;
 
-        public HttpRequestBuilder(HttpRestRequest<T> request)
+        public HttpRequestBuilder(HttpRequest<T> httpRequest)
         {
-            _request = request;
+            _httpRequest = httpRequest;
         }
 
         public HttpRequestBuilder<T> QueryParameter(string name, object value, bool ignoreEmptyValues = false)
         {
-            _request.AddQueryParameter(name, value, ignoreEmptyValues);
+            _httpRequest.AddQueryParameter(name, value, ignoreEmptyValues);
             return this;
         }
 
         public HttpRequestBuilder<T> Header(string name, string value)
         {
-            _request.AddHeader(name, value);
+            _httpRequest.AddHeader(name, value);
             return this;
         }
 
         public HttpRequestBuilder<T> Content(object content)
         {
-            _request.Data = content;
+            _httpRequest.Data = content;
             return this;
         }
 
-        public HttpRestRequest<T> Build()
+        public HttpRequest<T> Build()
         {
-            return _request;
+            return _httpRequest;
         }
     }
 }

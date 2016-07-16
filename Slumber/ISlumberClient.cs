@@ -13,6 +13,6 @@ namespace Slumber
         /// <typeparam name="T"></typeparam>
         /// <param name="request"></param>
         /// <returns></returns>
-        Task<IRestResponse<T>> ExecuteAsync<T>(IRestRequest<T> request);
+        Task<IResponse<T>> ExecuteAsync<T>(IRequest<T> request);
     }
 }

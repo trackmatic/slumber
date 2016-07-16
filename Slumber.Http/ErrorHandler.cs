@@ -13,7 +13,7 @@ namespace Slumber.Http
             _deserializer = deserializer;
         }
 
-        public RestResponse<T> Handle<T>(Exception e)
+        public Response<T> Handle<T>(Exception e)
         {
 
             try
@@ -26,7 +26,7 @@ namespace Slumber.Http
             }
         }
 
-        private RestResponse<T> NewResponseFromWebException<T>(WebException e)
+        private Response<T> NewResponseFromWebException<T>(WebException e)
         {
             if (e.Response == null)
             {
@@ -44,7 +44,7 @@ namespace Slumber.Http
                 {
                     var content = reader.ReadToEnd();
 
-                    var http = new RestResponse<T>(_deserializer)
+                    var http = new Response<T>(_deserializer)
                     {
                         StatusCode = (int)((HttpWebResponse)e.Response).StatusCode
                     };
@@ -61,9 +61,9 @@ namespace Slumber.Http
             }
         }
 
-        private RestResponse<T> NewResponseFromException<T>(Exception e)
+        private Response<T> NewResponseFromException<T>(Exception e)
         {
-            var http = new RestResponse<T>(_deserializer);
+            var http = new Response<T>(_deserializer);
             http.SetException(new SlumberException(e));
             return http;
         }

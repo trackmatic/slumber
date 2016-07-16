@@ -2,6 +2,6 @@
 {
     public interface IHttpPostProcessor
     {
-        void Process(IHttp http, IRestRequest request, IRestResponse response);
+        void Process(IHttp http, IRestRequest request, IResponse response);
     }
 }

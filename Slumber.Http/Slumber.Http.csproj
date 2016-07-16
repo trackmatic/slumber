@@ -59,7 +59,7 @@
     <Compile Include="IHttpPreProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Http.cs" />
-    <Compile Include="HttpRestRequest.cs" />
+    <Compile Include="HttpRequest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Slumber\Slumber.csproj">
