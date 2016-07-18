@@ -23,5 +23,7 @@ namespace Slumber
             _configuration.Validate();
             return _configuration.Http.Execute<T>(request);
         }
+
+        public ISlumberConfiguration Configuration => _configuration;
     }
 }

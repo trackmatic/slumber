@@ -14,5 +14,10 @@ namespace Slumber
         /// <param name="request"></param>
         /// <returns></returns>
         Task<IResponse<T>> ExecuteAsync<T>(IRequest<T> request);
+
+        /// <summary>
+        /// Exposes configuration
+        /// </summary>
+        ISlumberConfiguration Configuration { get; }
     }
 }
