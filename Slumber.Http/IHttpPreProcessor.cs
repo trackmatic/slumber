@@ -2,6 +2,6 @@
 {
     public interface IHttpPreProcessor
     {
-        void Process(IHttp http, IRequest request);
+        void OnExecuting(IHttp http, IRequest request);
     }
 }

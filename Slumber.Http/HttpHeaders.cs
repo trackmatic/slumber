@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Slumber.Http
 {
@@ -18,6 +19,7 @@ namespace Slumber.Http
             {
                 _headers.Add(method, new List<HttpHeader>());
             }
+            ClearPreviousHeaders(method, header);
             _headers[method].Add(header);
         }
 
@@ -30,6 +32,14 @@ namespace Slumber.Http
                     return Empty;
                 }
                 return _headers[method];
+            }
+        }
+
+        private void ClearPreviousHeaders(string method, HttpHeader header)
+        {
+            foreach (var previous in _headers[method].Where(x => x.Equals(header)).ToList())
+            {
+                _headers[method].Remove(previous);
             }
         }
     }

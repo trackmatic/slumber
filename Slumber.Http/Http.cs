@@ -58,7 +58,7 @@ namespace Slumber.Http
         {
             foreach (var processor in _preProcessors)
             {
-                processor.Process(this, request);
+                processor.OnExecuting(this, request);
             }
         }
 
@@ -66,7 +66,7 @@ namespace Slumber.Http
         {
             foreach (var processor in _postProcessors)
             {
-                processor.Process(this, request, response);
+                processor.OnExecuted(this, request, response);
             }
         }
 
