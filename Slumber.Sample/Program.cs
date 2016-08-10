@@ -10,11 +10,18 @@ namespace Slumber.Sample
     {
         static void Main(string[] args)
         {
-            var client = new SlumberClient("http://api.fixer.io", slumber =>
+            var client = new SlumberClient("https://rest.trackmatic.co.za/api/v2", slumber =>
             {
                 slumber.UseJsonSerialization().UseHttp(http => http.UseJsonAsDefaultContentType()).UseConsoleLogger();
             });
-            
+
+
+            var response = client.ExecuteAsync(HttpRequestBuilder<dynamic>.Post("/account/auth").Content(new
+            {
+                username = "rossj@trackmatic.co.za",
+                password = "W@kogofU71"
+            }).Build()).Result;
+
             // Using Dynamic Types
 
             var dynamicRequest = HttpRequestBuilder<dynamic>.Get("/latest").QueryParameter("base", "USD").Build();
@@ -26,6 +33,8 @@ namespace Slumber.Sample
             var typedRequest = HttpRequestBuilder<ExchangeRates>.Get("/latest").QueryParameter("base", "USD").Build();
 
             var typesResult = client.ExecuteAsync(typedRequest).Result;
+
+
         }
 
         public class ExchangeRates

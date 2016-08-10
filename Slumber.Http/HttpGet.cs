@@ -7,7 +7,6 @@ namespace Slumber.Http
     public class HttpGet : IHttpMethod
     {
         private readonly ISlumberConfiguration _configuration;
-
         private readonly IDeserializer _deserializer;
 
         public HttpGet(ISlumberConfiguration configuration)
@@ -24,7 +23,7 @@ namespace Slumber.Http
             try
             {
                 var webResponse = await webRequest.GetResponseAsync();
-                return webResponse.CreateResponse<T>(_deserializer);
+                return webResponse.CreateResponse<T>(_configuration, _deserializer);
             }
             catch (Exception e)
             {

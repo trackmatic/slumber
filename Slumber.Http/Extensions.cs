@@ -56,7 +56,7 @@ namespace Slumber.Http
             }
         }
 
-        public static Response<T> CreateResponse<T>(this WebResponse webResponse, IDeserializer deserializer)
+        public static Response<T> CreateResponse<T>(this WebResponse webResponse, ISlumberConfiguration configuration, IDeserializer deserializer)
         {
             var http = new Response<T>(deserializer);
             try
@@ -77,7 +77,7 @@ namespace Slumber.Http
                         var httpWebResponse = (HttpWebResponse)webResponse;
                         http.Content = reader.ReadToEnd();
                         http.StatusCode = (int)httpWebResponse.StatusCode;
-                        if (http.HasError)
+                        if (configuration.IsError(http.StatusCode))
                         {
                             http.SetException(new UpstreamException(http.Content));
                         }

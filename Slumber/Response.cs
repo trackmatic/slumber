@@ -34,24 +34,23 @@ namespace Slumber
             return _headers.Any(x => x.Name == name);
         }
 
-        public bool HasError => StatusCode == -1 || StatusCode >= 400;
+        public bool HasError => Exception != null;
 
-        public T Data
+        public T Data => GetContentData<T>();
+
+        public TContentType GetContentData<TContentType>()
         {
-            get
+            if (HasError)
             {
-                if (HasError)
-                {
-                    throw Exception;
-                }
-
-                if (string.IsNullOrEmpty(Content))
-                {
-                    throw new SlumberException("The response does not contain any content");
-                }
-
-                return _deserializer.Deserialize<T>(Content);
+                throw Exception;
             }
+
+            if (string.IsNullOrEmpty(Content))
+            {
+                throw new SlumberException("The response does not contain any content");
+            }
+
+            return _deserializer.Deserialize<TContentType>(Content);
         }
 
         public TErrorType GetErrorData<TErrorType>()

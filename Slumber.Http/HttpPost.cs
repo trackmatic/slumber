@@ -26,7 +26,7 @@ namespace Slumber.Http
                 var stream = await webRequest.GetRequestStreamAsync();
                 WriteToStream(stream, request);
                 var webResponse = await webRequest.GetResponseAsync();
-                return webResponse.CreateResponse<T>(_deserializer);
+                return webResponse.CreateResponse<T>(_configuration, _deserializer);
             }
             catch (Exception e)
             {

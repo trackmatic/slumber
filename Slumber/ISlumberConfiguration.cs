@@ -41,5 +41,12 @@ namespace Slumber
         /// Validates that the configuration is valid, this is tested before any requests can be made
         /// </summary>
         void Validate();
+
+        /// <summary>
+        /// Determines whether the given code should be treated as an error
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        bool IsError(int code);
     }
 }

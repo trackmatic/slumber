@@ -45,5 +45,10 @@ namespace Slumber
                 throw new SlumberException("Log has not been set");
             }
         }
+
+        public bool IsError(int code)
+        {
+            return code == -1 || code >= 400;
+        }
     }
 }
