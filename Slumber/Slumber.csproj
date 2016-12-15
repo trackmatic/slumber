@@ -30,12 +30,36 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DefaultUriEncoder.cs" />
+    <Compile Include="Http\ConfigurationExtensions.cs" />
+    <Compile Include="Http\ErrorHandler.cs" />
+    <Compile Include="Http\Extensions.cs" />
+    <Compile Include="Http\Http.cs" />
+    <Compile Include="Http\HttpCookies.cs" />
+    <Compile Include="Http\HttpCookiesPostProcessor.cs" />
+    <Compile Include="Http\HttpCookiesPreProcessor.cs" />
+    <Compile Include="Http\HttpGet.cs" />
+    <Compile Include="Http\HttpHeaders.cs" />
+    <Compile Include="Http\HttpHeadersPreProcessor.cs" />
+    <Compile Include="Http\HttpParameterEncoder.cs" />
+    <Compile Include="Http\HttpPost.cs" />
+    <Compile Include="Http\HttpRequest.cs" />
+    <Compile Include="Http\HttpRequestBuilder.cs" />
+    <Compile Include="Http\IHttpInterceptor.cs" />
+    <Compile Include="Http\IHttpMethod.cs" />
+    <Compile Include="Http\IHttpPostProcessor.cs" />
+    <Compile Include="Http\IHttpPreProcessor.cs" />
     <Compile Include="IDeserializer.cs" />
     <Compile Include="IHttp.cs" />
     <Compile Include="ILogger.cs" />
@@ -49,6 +73,11 @@
     <Compile Include="ISerializer.cs" />
     <Compile Include="ISerializationFactory.cs" />
     <Compile Include="IUriEncoder.cs" />
+    <Compile Include="Json\ConfigurationExtensions.cs" />
+    <Compile Include="Json\Json.cs" />
+    <Compile Include="Json\JsonSerializerFactory.cs" />
+    <Compile Include="Logging\ConfigurationExtensions.cs" />
+    <Compile Include="Logging\ConsoleLogger.cs" />
     <Compile Include="SlumberClient.cs" />
     <Compile Include="SlumberConfiguration.cs" />
     <Compile Include="SlumberException.cs" />
@@ -61,6 +90,15 @@
     <Compile Include="QueryParameter.cs" />
     <Compile Include="Response.cs" />
     <Compile Include="UpstreamException.cs" />
+    <Compile Include="Xml\ConfigurationExtensions.cs" />
+    <Compile Include="Xml\Xml.cs" />
+    <Compile Include="Xml\XmlSerializerFactory.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Slumber.nuspec">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

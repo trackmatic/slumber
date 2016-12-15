@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
-using Slmber.Json;
 using Slumber.Http;
+using Slumber.Json;
 using Slumber.Logging;
 
 namespace Slumber.Sample
@@ -16,15 +16,18 @@ namespace Slumber.Sample
             });
 
 
-            var response = client.ExecuteAsync(HttpRequestBuilder<dynamic>.Post("/account/auth").Content(new
+            /*var response = client.ExecuteAsync(HttpRequestBuilder<dynamic>.Post("/account/auth").Content(new
             {
                 username = "rossj@trackmatic.co.za",
                 password = "W@kogofU71"
-            }).Build()).Result;
+            }).Build()).Result;*/
 
             // Using Dynamic Types
 
-            var dynamicRequest = HttpRequestBuilder<dynamic>.Get("/latest").QueryParameter("base", "USD").Build();
+            //var dynamicRequest = HttpRequestBuilder<dynamic>.Get("/latest").QueryParameter("base", "USD").Build();
+
+
+            var dynamicRequest = HttpRequestBuilder<dynamic>.Delete("/latest").Build();
 
             var dynamicResult = client.ExecuteAsync(dynamicRequest).Result;
 

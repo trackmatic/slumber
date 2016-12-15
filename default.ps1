@@ -15,10 +15,10 @@ Task Test {
 }
 
 Task Publish-Nuget-Package {
-	$spec = [xml](get-content "$base_dir/Slumber.Nuget/Slumber.nuspec")
+	$spec = [xml](get-content "$base_dir/Slumber/Slumber.nuspec")
 	$version = $spec.package.metadata.version
 	$package = "$base_dir/Slumber.$version.nupkg"
-    $package_dir = "$base_dir/Slumber.Nuget/bin/package"
+    $package_dir = "$base_dir/Slumber/bin/package"
     
     # Prepare package folder
     remove-item $package_dir -R -ErrorAction SilentlyContinue
@@ -27,10 +27,10 @@ Task Publish-Nuget-Package {
     new-item -itemtype directory "$package_dir/lib/net45"
     
     # Copy nuspec file to package folder
-    copy-item "$base_dir/Slumber.Nuget/Slumber.nuspec" "$package_dir/Slumber.nuspec"
+    copy-item "$base_dir/Slumber/Slumber.nuspec" "$package_dir/Slumber.nuspec"
 
     # Copy libraries to package folders
-    get-childitem "$base_dir/Slumber.Nuget/bin/Debug" | ? { $_.Name -like "Slumber*.dll" -and $_.Name } | % { copy-item $_.FullName "$package_dir/lib/net45" }
+    get-childitem "$base_dir/Slumber/bin/Debug" | ? { $_.Name -like "Slumber*.dll" -and $_.Name } | % { copy-item $_.FullName "$package_dir/lib/net45" }
 
     # Create nuget package and upload to nuget
 	exec { & $nuget pack "$package_dir/Slumber.nuspec" }

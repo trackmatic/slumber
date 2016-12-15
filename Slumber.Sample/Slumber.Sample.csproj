@@ -55,18 +55,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Slumber.Http\Slumber.Http.csproj">
-      <Project>{e71f1256-3f01-4897-99e0-d3ec0c26868b}</Project>
-      <Name>Slumber.Http</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Slumber.Json\Slumber.Json.csproj">
-      <Project>{87d485e2-ee56-4768-afdb-78dd802e4a4b}</Project>
-      <Name>Slumber.Json</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Slumber.Logging\Slumber.Logging.csproj">
-      <Project>{3f45dc3c-be0f-411c-badb-02c3ce8d4204}</Project>
-      <Name>Slumber.Logging</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Slumber\Slumber.csproj">
       <Project>{0AC24C4E-1389-4C53-BA07-A6F2F4B57F37}</Project>
       <Name>Slumber</Name>
