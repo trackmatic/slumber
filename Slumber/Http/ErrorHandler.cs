@@ -6,9 +6,9 @@ namespace Slumber.Http
 {
     public class ErrorHandler
     {
-        private readonly IDeserializer _deserializer;
+        private readonly ISerializationProvider _deserializer;
 
-        public ErrorHandler(IDeserializer deserializer)
+        public ErrorHandler(ISerializationProvider deserializer)
         {
             _deserializer = deserializer;
         }

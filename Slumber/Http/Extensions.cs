@@ -56,9 +56,9 @@ namespace Slumber.Http
             }
         }
 
-        public static Response<T> CreateResponse<T>(this WebResponse webResponse, ISlumberConfiguration configuration, IDeserializer deserializer)
+        public static Response<T> CreateResponse<T>(this WebResponse webResponse, ISlumberConfiguration configuration)
         {
-            var http = new Response<T>(deserializer);
+            var http = new Response<T>(configuration.Serialization);
             try
             {
                 foreach (var name in webResponse.Headers.AllKeys)

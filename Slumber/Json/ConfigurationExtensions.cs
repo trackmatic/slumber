@@ -7,7 +7,7 @@ namespace Slumber.Json
     {
         public static ISlumberConfiguration UseJsonSerialization(this ISlumberConfiguration configuration, Action<JsonSerializerSettings> customise = null)
         {
-            configuration.Serialization = new JsonSerializerFactory(customise);
+            configuration.Serialization.Register(new JsonSerializerFactory(customise));
             return configuration;
         }
     }

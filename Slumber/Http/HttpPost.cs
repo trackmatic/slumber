@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,14 +8,10 @@ namespace Slumber.Http
     public class HttpPost : IHttpMethod
     {
         private readonly ISlumberConfiguration _configuration;
-        private readonly ISerializer _serializer;
-        private readonly IDeserializer _deserializer;
 
         public HttpPost(ISlumberConfiguration configuration)
         {
             _configuration = configuration;
-            _serializer = configuration.Serialization.CreateSerializer();
-            _deserializer = configuration.Serialization.CreateDeserializer();
         }
 
         public async Task<IResponse<T>> Execute<T>(IRequest request)
@@ -25,20 +20,20 @@ namespace Slumber.Http
             try
             {
                 var stream = await webRequest.GetRequestStreamAsync().ConfigureAwait(false);
-                var json = _serializer.Serialize(request.Data);
-                if (!string.IsNullOrEmpty(json))
+                if (request.Data != null && request.ContainsHeader(Slumber.HttpHeaders.ContentType))
                 {
+                    var json = _configuration.Serialization.CreateSerializer(request).Serialize(request.Data);
                     var uri = _configuration.UriEncoder.Encode(request);
                     _configuration.Log.Debug(@"POST {0}\r\n\r\n{1}", uri, json);
                     var buffer = Encoding.UTF8.GetBytes(json);
                     await stream.WriteAsync(buffer, 0, buffer.Length).ConfigureAwait(false);
                 }
                 var webResponse = await webRequest.GetResponseAsync().ConfigureAwait(false);
-                return webResponse.CreateResponse<T>(_configuration, _deserializer);
+                return webResponse.CreateResponse<T>(_configuration);
             }
             catch (Exception e)
             {
-                var handler = new ErrorHandler(_deserializer);
+                var handler = new ErrorHandler(_configuration.Serialization);
                 return handler.Handle<T>(e);
             }
         }

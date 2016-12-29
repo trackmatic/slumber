@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Slumber.Http
 {
@@ -19,9 +20,7 @@ namespace Slumber.Http
         }
 
         public IEnumerable<HttpCookie> Cookies => _cookies;
-
-        public Type ResponseType => typeof (T);
-
+        
         public HttpHeader GetHeader(string name)
         {
             if (!_headers.ContainsKey(name))
@@ -39,7 +38,7 @@ namespace Slumber.Http
 
         public IEnumerable<QueryParameter> Query => _queryParameters;
 
-        public IEnumerable<HttpHeader> Headers => _headers.Values;
+        public IList<HttpHeader> Headers => _headers.Values.ToList();
 
         public void AddQueryParameter(string name, object value, bool ignoreEmptyValues = false)
         {
@@ -65,6 +64,15 @@ namespace Slumber.Http
             Add(new HttpHeader(name, value));
         }
 
+        public void RemoveHeader(string name)
+        {
+            if (!_headers.ContainsKey(name))
+            {
+                return;
+            }
+            _headers.Remove(name);
+        }
+
         public void Add(HttpHeader header)
         {
             if (_headers.ContainsKey(header.Name))
@@ -74,11 +82,11 @@ namespace Slumber.Http
             _headers.Add(header.Name, header);
         }
 
-        public bool Contains(HttpHeader header)
+        public bool ContainsHeader(string name)
         {
-            return _headers.ContainsKey(header.Value);
+            return _headers.ContainsKey(name);
         }
-
+        
         public void Add(HttpCookie cookie)
         {
             _cookies.Add(cookie);

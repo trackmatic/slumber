@@ -2,6 +2,8 @@
 {
     public class HttpRequestBuilder<T>
     {
+        #region Factory Methods
+
         public static HttpRequestBuilder<T> Get(string path)
         {
             return New(path, HttpMethods.Get);
@@ -11,10 +13,12 @@
         {
             return New(path, HttpMethods.Post);
         }
+
         public static HttpRequestBuilder<T> Put(string path)
         {
             return New(path, HttpMethods.Put);
         }
+
         public static HttpRequestBuilder<T> Patch(string path)
         {
             return New(path, HttpMethods.Patch);
@@ -29,6 +33,8 @@
         {
             return new HttpRequestBuilder<T>(new HttpRequest<T>(path, method));
         }
+
+        #endregion
 
         private readonly HttpRequest<T> _httpRequest;
 
@@ -52,6 +58,14 @@
         public HttpRequestBuilder<T> Content(object content)
         {
             _httpRequest.Data = content;
+            return this;
+        }
+
+        public HttpRequestBuilder<T> WithContentType(string type)
+        {
+            var header = Slumber.HttpHeaders.ContentType;
+            _httpRequest.RemoveHeader(header);
+            _httpRequest.AddHeader(header, type);
             return this;
         }
 

@@ -6,13 +6,12 @@ namespace Slumber
     public class Response<T> : IResponse<T>
     {
         private readonly List<HttpHeader> _headers;
+        private readonly ISerializationProvider _serialization;
 
-        private readonly IDeserializer _deserializer;
-
-        public Response(IDeserializer deserializer)
+        public Response(ISerializationProvider serialization)
         {
             _headers = new List<HttpHeader>();
-            _deserializer = deserializer;
+            _serialization = serialization;
             StatusCode = -1;
         }
 
@@ -44,13 +43,13 @@ namespace Slumber
             {
                 throw Exception;
             }
-
+            
             if (string.IsNullOrEmpty(Content))
             {
                 throw new SlumberException("The response does not contain any content");
             }
 
-            return _deserializer.Deserialize<TContentType>(Content);
+            return _serialization.CreateDeserializer(this).Deserialize<TContentType>(Content);
         }
 
         public TErrorType GetErrorData<TErrorType>()
@@ -60,7 +59,7 @@ namespace Slumber
                 throw new SlumberException("There is no exception to get content from");
             }
 
-            return Exception.GetContent<TErrorType>(_deserializer);
+            return Exception.GetContent<TErrorType>(_serialization.CreateDeserializer(this));
         }
         
         public void SetException(SlumberException e)

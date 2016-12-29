@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Slumber.Http
+﻿namespace Slumber.Http
 {
     public class HttpHeadersPreProcessor : IHttpPreProcessor
     {
@@ -8,7 +6,7 @@ namespace Slumber.Http
         {
             foreach (var header in http.GetHeaders(request.Method))
             {
-                if (request.Contains(header))
+                if (request.ContainsHeader(header.Name))
                 {
                     continue;
                 }

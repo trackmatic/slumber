@@ -9,6 +9,7 @@ namespace Slumber
             BaseUri = baseUri;
             Timeout = timeout;
             Log = new NullLogger();
+            Serialization = new SerializationProvider();
         }
 
         public string BaseUri { get; }
@@ -17,7 +18,7 @@ namespace Slumber
 
         public ILogger Log { get; set; }
 
-        public ISerializationFactory Serialization { get; set; }
+        public ISerializationProvider Serialization { get; set; }
 
         public IUriEncoder UriEncoder { get; set; }
 

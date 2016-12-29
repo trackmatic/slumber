@@ -7,12 +7,10 @@ namespace Slumber.Http
     public class HttpGet : IHttpMethod
     {
         private readonly ISlumberConfiguration _configuration;
-        private readonly IDeserializer _deserializer;
 
         public HttpGet(ISlumberConfiguration configuration)
         {
             _configuration = configuration;
-            _deserializer = configuration.Serialization.CreateDeserializer();
         }
 
         public async Task<IResponse<T>> Execute<T>(IRequest request)
@@ -23,11 +21,11 @@ namespace Slumber.Http
             try
             {
                 var webResponse = await webRequest.GetResponseAsync().ConfigureAwait(false);
-                return webResponse.CreateResponse<T>(_configuration, _deserializer);
+                return webResponse.CreateResponse<T>(_configuration);
             }
             catch (Exception e)
             {
-                var handler = new ErrorHandler(_deserializer);
+                var handler = new ErrorHandler(_configuration.Serialization);
                 return handler.Handle<T>(e);
             }
         }

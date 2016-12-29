@@ -5,5 +5,6 @@
         IDeserializer CreateDeserializer();
 
         ISerializer CreateSerializer();
+        bool AppliesTo(string contentType);
     }
 }

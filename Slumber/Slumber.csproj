@@ -61,8 +61,10 @@
     <Compile Include="Http\IHttpPostProcessor.cs" />
     <Compile Include="Http\IHttpPreProcessor.cs" />
     <Compile Include="IDeserializer.cs" />
+    <Compile Include="IHeaders.cs" />
     <Compile Include="IHttp.cs" />
     <Compile Include="ILogger.cs" />
+    <Compile Include="ISerializationProvider.cs" />
     <Compile Include="ISlumberClient.cs" />
     <Compile Include="ISlumberConfiguration.cs" />
     <Compile Include="IParameterEncoder.cs" />
@@ -78,6 +80,7 @@
     <Compile Include="Json\JsonSerializerFactory.cs" />
     <Compile Include="Logging\ConfigurationExtensions.cs" />
     <Compile Include="Logging\ConsoleLogger.cs" />
+    <Compile Include="SerializationProvider.cs" />
     <Compile Include="SlumberClient.cs" />
     <Compile Include="SlumberConfiguration.cs" />
     <Compile Include="SlumberException.cs" />

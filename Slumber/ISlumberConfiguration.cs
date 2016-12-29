@@ -25,7 +25,7 @@ namespace Slumber
         /// <summary>
         /// An instance of a serializer factory
         /// </summary>
-        ISerializationFactory Serialization { get; set; }
+        ISerializationProvider Serialization { get; set; }
 
         /// <summary>
         /// An instance of a uri encoder
