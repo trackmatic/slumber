@@ -2,6 +2,9 @@
 
 namespace Slumber
 {
+    /// <summary>
+    /// Represents a class which handles headers
+    /// </summary>
     public interface IHeaders
     {
         /// <summary>
