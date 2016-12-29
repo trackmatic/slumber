@@ -10,7 +10,7 @@ namespace Slumber.Sample
     {
         static void Main(string[] args)
         {
-            var client = new SlumberClient("https://rest.trackmatic.co.za/api/v2", slumber =>
+            var client = new SlumberClient("https://api.github.com", slumber =>
             {
                 slumber.UseJsonSerialization().UseHttp(http => http.UseJsonAsDefaultContentType()).UseConsoleLogger();
             });
@@ -27,7 +27,9 @@ namespace Slumber.Sample
             //var dynamicRequest = HttpRequestBuilder<dynamic>.Get("/latest").QueryParameter("base", "USD").Build();
 
 
-            var dynamicRequest = HttpRequestBuilder<dynamic>.Delete("/latest").Build();
+
+
+            var dynamicRequest = HttpRequestBuilder<dynamic>.Get("/repos/trackmatic/slumber/releases").Build();
 
             var dynamicResult = client.ExecuteAsync(dynamicRequest).Result;
 

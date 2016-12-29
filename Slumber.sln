@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slumber", "Slumber\Slumber.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slumber.Sample", "Slumber.Sample\Slumber.Sample.csproj", "{22DEF5F3-0EBD-4D68-9D4F-B1459BA1745B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slumber.Spec", "Slumber.Spec\Slumber.Spec.csproj", "{59BDA39F-2DEC-4F9D-BE61-265469F5795B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slumber.Tests", "Slumber.Tests\Slumber.Tests.csproj", "{9EC02E1D-CBF0-487D-8496-97AA081956C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{22DEF5F3-0EBD-4D68-9D4F-B1459BA1745B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22DEF5F3-0EBD-4D68-9D4F-B1459BA1745B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22DEF5F3-0EBD-4D68-9D4F-B1459BA1745B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{59BDA39F-2DEC-4F9D-BE61-265469F5795B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{59BDA39F-2DEC-4F9D-BE61-265469F5795B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{59BDA39F-2DEC-4F9D-BE61-265469F5795B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{59BDA39F-2DEC-4F9D-BE61-265469F5795B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EC02E1D-CBF0-487D-8496-97AA081956C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EC02E1D-CBF0-487D-8496-97AA081956C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EC02E1D-CBF0-487D-8496-97AA081956C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EC02E1D-CBF0-487D-8496-97AA081956C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

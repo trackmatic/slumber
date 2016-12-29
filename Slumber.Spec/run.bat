@@ -1,1 +1,0 @@
-..\..\..\packages\nspec.1.0.1\tools\NSpecRunner.exe Slumber.Spec.dll
