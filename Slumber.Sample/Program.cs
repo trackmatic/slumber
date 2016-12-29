@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Slumber.Http;
 using Slumber.Json;
 using Slumber.Logging;
+using Slumber.Xml;
 
 namespace Slumber.Sample
 {
@@ -12,7 +13,7 @@ namespace Slumber.Sample
         {
             var client = new SlumberClient("http://api.fixer.io", slumber =>
             {
-                slumber.UseJsonSerialization().UseHttp(http => http.UseJsonAsDefaultContentType()).UseConsoleLogger();
+                slumber.UseJsonSerialization().UseXmlSerialization().UseHttp(http => http.UseJsonAsDefaultContentType()).UseConsoleLogger();
             });
 
             // Using Dynamic Types

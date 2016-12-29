@@ -2,7 +2,7 @@
 {
     public static class ConfigurationExtensions
     {
-        public static ISlumberConfiguration ConfigureWithXmlSerialization(this ISlumberConfiguration configuration)
+        public static ISlumberConfiguration UseXmlSerialization(this ISlumberConfiguration configuration)
         {
             configuration.Serialization.Register(new XmlSerializerFactory());
             return configuration;

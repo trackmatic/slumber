@@ -15,7 +15,6 @@ namespace Slumber.Http
 
         public Response<T> Handle<T>(Exception e)
         {
-
             try
             {
                 return e is WebException ? NewResponseFromWebException<T>(e as WebException) : NewResponseFromException<T>(e);
