@@ -80,6 +80,13 @@
     <Compile Include="Json\JsonSerializerFactory.cs" />
     <Compile Include="Logging\ConfigurationExtensions.cs" />
     <Compile Include="Logging\ConsoleLogger.cs" />
+    <Compile Include="Multipart\ConfigurationExtensions.cs" />
+    <Compile Include="Multipart\IMultipartContent.cs" />
+    <Compile Include="Multipart\IMultipartFile.cs" />
+    <Compile Include="Multipart\MultipartContent.cs" />
+    <Compile Include="Multipart\MultipartFile.cs" />
+    <Compile Include="Multipart\MultipartSerializer.cs" />
+    <Compile Include="Multipart\MultipartSerializerFactory.cs" />
     <Compile Include="SerializationProvider.cs" />
     <Compile Include="SlumberClient.cs" />
     <Compile Include="SlumberConfiguration.cs" />

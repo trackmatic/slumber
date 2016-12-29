@@ -2,6 +2,6 @@
 {
     public interface ISerializer
     {
-        string Serialize(object obj);
+        string Serialize(IRequest request);
     }
 }

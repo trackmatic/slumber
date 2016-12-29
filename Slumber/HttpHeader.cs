@@ -36,5 +36,10 @@
         {
             return new HttpHeader(HttpHeaders.ContentType, type);
         }
+
+        public override string ToString()
+        {
+            return $"{Name}: {Value}";
+        }
     }
 }

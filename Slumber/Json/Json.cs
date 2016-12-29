@@ -26,10 +26,10 @@ namespace Slumber.Json
             _settings = settings;
         }
 
-        public string Serialize(object obj)
+        public string Serialize(IRequest request)
         {
-            if (obj == null) return null;
-            return JsonConvert.SerializeObject(obj, Formatting.Indented, _settings);
+            if (request.Data == null) return null;
+            return JsonConvert.SerializeObject(request.Data, Formatting.Indented, _settings);
         }
     }
 }

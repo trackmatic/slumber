@@ -52,6 +52,12 @@ namespace Slumber
         void AddHeader(string name, string value);
 
         /// <summary>
+        /// Removes a header from the request
+        /// </summary>
+        /// <param name="name"></param>
+        void RemoveHeader(string name);
+
+        /// <summary>
         /// Adds a query parameter to the request
         /// </summary>
         /// <param name="parameter"></param>

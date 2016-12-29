@@ -1,4 +1,6 @@
-﻿namespace Slumber.Http
+﻿using Slumber.Multipart;
+
+namespace Slumber.Http
 {
     public class HttpRequestBuilder<T>
     {
@@ -59,6 +61,11 @@
         {
             _httpRequest.Data = content;
             return this;
+        }
+
+        public HttpRequestBuilder<T> Content(IMultipartContent content)
+        {
+            return WithContentType("multipart/form-data").Content((object)content);
         }
 
         public HttpRequestBuilder<T> WithContentType(string type)

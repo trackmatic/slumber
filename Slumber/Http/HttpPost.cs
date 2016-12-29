@@ -22,7 +22,7 @@ namespace Slumber.Http
                 var stream = await webRequest.GetRequestStreamAsync().ConfigureAwait(false);
                 if (request.Data != null && request.ContainsHeader(Slumber.HttpHeaders.ContentType))
                 {
-                    var json = _configuration.Serialization.CreateSerializer(request).Serialize(request.Data);
+                    var json = _configuration.Serialization.CreateSerializer(request).Serialize(request);
                     var uri = _configuration.UriEncoder.Encode(request);
                     _configuration.Log.Debug(@"POST {0}\r\n\r\n{1}", uri, json);
                     var buffer = Encoding.UTF8.GetBytes(json);

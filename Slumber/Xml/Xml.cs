@@ -20,13 +20,13 @@ namespace Slumber.Xml
 
     public class HttpXmlSerializer : ISerializer
     {
-        public string Serialize(object obj)
+        public string Serialize(IRequest request)
         {
             using (var stream = new MemoryStream())
             {
-                if (obj == null) return null;
-                var serializer = new XmlSerializer(obj.GetType());
-                serializer.Serialize(stream, obj);
+                if (request.Data == null) return null;
+                var serializer = new XmlSerializer(request.Data.GetType());
+                serializer.Serialize(stream, request.Data);
                 var buffer = new byte[stream.Length];
                 stream.Position = 0;
                 stream.Read(buffer, 0, buffer.Length);
