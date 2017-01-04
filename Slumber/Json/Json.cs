@@ -23,10 +23,12 @@ namespace Slumber.Json
     public class DynamicJsonSerializer : ISerializer
     {        
         private readonly JsonSerializerSettings _settings;
+        private readonly ILogger _logger;
 
-        public DynamicJsonSerializer(JsonSerializerSettings settings)
+        public DynamicJsonSerializer(JsonSerializerSettings settings, ILogger logger)
         {
             _settings = settings;
+            _logger = logger;
         }
 
         public string Serialize(IRequest request)
@@ -39,6 +41,7 @@ namespace Slumber.Json
         {
             if (request.Data == null) return null;
             var data = JsonConvert.SerializeObject(request.Data, Formatting.Indented, _settings);
+            _logger.Debug(data);
             var buffer = Encoding.UTF8.GetBytes(data);
             return stream.WriteAsync(buffer, 0, buffer.Length);
         }
