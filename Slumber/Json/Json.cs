@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using System.IO;
+using System.Text;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Slumber.Json
 {
@@ -30,6 +33,14 @@ namespace Slumber.Json
         {
             if (request.Data == null) return null;
             return JsonConvert.SerializeObject(request.Data, Formatting.Indented, _settings);
+        }
+
+        public Task Serialize(Stream stream, IRequest request)
+        {
+            if (request.Data == null) return null;
+            var data = JsonConvert.SerializeObject(request.Data, Formatting.Indented, _settings);
+            var buffer = Encoding.UTF8.GetBytes(data);
+            return stream.WriteAsync(buffer, 0, buffer.Length);
         }
     }
 }

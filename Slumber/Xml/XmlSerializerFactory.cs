@@ -2,7 +2,7 @@
 {
     public class XmlSerializerFactory : ISerializationFactory
     {
-        public ISerializer CreateSerializer()
+        public ISerializer CreateSerializer(IRequest request)
         {
             return new HttpXmlSerializer();
         }

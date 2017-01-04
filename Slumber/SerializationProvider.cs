@@ -22,7 +22,7 @@ namespace Slumber
         public ISerializer CreateSerializer(IRequest request)
         {
             var factory = GetFactory(request);
-            return factory.CreateSerializer();
+            return factory.CreateSerializer(request);
         }
 
         public IDeserializer CreateDeserializer(IResponse response)

@@ -1,25 +1,29 @@
 ﻿using System;
+using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Slumber.Multipart
 {
     public class MultipartSerializer : ISerializer
     {
+        private readonly string _boundary;
 
-        public string Serialize(IRequest request)
+        public MultipartSerializer(string boundary)
         {
-            return Serialize(request, DateTime.Now);
+            _boundary = boundary;
         }
 
-        public string Serialize(IRequest request, DateTime now)
+        public Task Serialize(Stream stream, IRequest request)
         {
-            request.RemoveHeader(HttpHeaders.ContentType);
-            var boundary = "---------------------------" + now.Ticks.ToString("x");
-            var header = $"multipart/form-data; boundary={boundary}";
-            request.AddHeader(HttpHeaders.ContentType, header);
+            return Serialize(stream, request, DateTime.Now);
+        }
+
+        public Task Serialize(Stream stream, IRequest request, DateTime now)
+        {
             var content = GetMultipartContent(request);
-            var builder = new Builder(boundary, content);
-            return builder.GetContent();
+            var builder = new Builder(_boundary, content, stream);
+            return builder.WriteContent();
         }
 
         private static IMultipartContent GetMultipartContent(IRequest request)
@@ -36,49 +40,63 @@ namespace Slumber.Multipart
         {
             private readonly string _boundary;
             private readonly IMultipartContent _content;
+            private readonly Stream _stream;
 
-            public Builder(string boundary, IMultipartContent content)
+            public Builder(string boundary, IMultipartContent content, Stream stream)
             {
                 _boundary = boundary;
                 _content = content;
+                _stream = stream;
             }
 
-            public string GetContent()
+            public async Task WriteContent()
             {
-                var data = new StringBuilder();
-
-                foreach (var item in _content.FormData)
-                {
-                    data.AppendLine();
-                    data.Append(_boundary);
-                    data.AppendLine();
-                    data.AppendFormat("Content-Disposition: form-data; name=\"{0}\"", item.Key);
-                    data.AppendLine();
-                    data.AppendLine();
-                    data.Append(item.Value);
-                    data.AppendLine();
-                }
+                var boundary = "--" + _boundary;
 
                 foreach (var item in _content.Files)
                 {
-                    data.AppendLine();
-                    data.Append(_boundary);
-                    data.AppendLine();
-                    data.AppendFormat("Content-Disposition: form-data; name=\"{0}\";", item.Key);
-                    data.AppendFormat(" filename=\"{0}\"", item.Value.Filename);
-                    data.AppendLine();
-                    data.AppendFormat("Content-Type: {0}", item.Value.ContentType);
-                    data.AppendLine();
-                    data.AppendLine();
-                    data.Append(Encoding.UTF8.GetString(item.Value.Data));
-                    data.AppendLine();
+                    await Write(boundary).ConfigureAwait(false);
+                    await WriteLine().ConfigureAwait(false);
+                    await WriteFormat("Content-Disposition: form-data; name=\"{0}\";", item.Key).ConfigureAwait(false);
+                    await WriteFormat(" filename=\"{0}\"", item.Value.Filename).ConfigureAwait(false);
+                    await WriteLine().ConfigureAwait(false);
+                    await WriteFormat("Content-Type: {0}", item.Value.ContentType).ConfigureAwait(false);
+                    await WriteLine().ConfigureAwait(false);
+                    await WriteLine().ConfigureAwait(false);
+                    await _stream.WriteAsync(item.Value.Data, 0, item.Value.Data.Length).ConfigureAwait(false);
+                    await WriteLine().ConfigureAwait(false);
+                }
+
+                foreach (var item in _content.FormData)
+                {
+                    //await WriteLine().ConfigureAwait(false);
+                    await Write(boundary).ConfigureAwait(false);
+                    await WriteLine().ConfigureAwait(false);
+                    await WriteFormat("Content-Disposition: form-data; name=\"{0}\"", item.Key).ConfigureAwait(false);
+                    await WriteLine().ConfigureAwait(false);
+                    await WriteLine().ConfigureAwait(false);
+                    await Write(item.Value).ConfigureAwait(false);
+                    await WriteLine().ConfigureAwait(false);
                 }
                 
-                data.AppendFormat("--{0}--", _boundary);
-                data.AppendLine();
+                await WriteFormat("{0}--", boundary).ConfigureAwait(false);
+                await WriteLine().ConfigureAwait(false);
+            }
 
-                var result = data.ToString();
-                return result;
+            private Task WriteLine()
+            {
+                return Write("\r\n");
+            }
+
+            private Task WriteFormat(string value, params object[] parameters)
+            {
+                return Write(string.Format(value, parameters));
+            }
+
+            private Task Write(string value)
+            {
+                var buffer = Encoding.UTF8.GetBytes(value);
+                return _stream.WriteAsync(buffer, 0, buffer.Length);
             }
         }
     }

@@ -18,7 +18,7 @@ namespace Slumber.Json
             customise?.Invoke(_settings);
         }
 
-        public ISerializer CreateSerializer()
+        public ISerializer CreateSerializer(IRequest request)
         {
             return new DynamicJsonSerializer(_settings);
         }

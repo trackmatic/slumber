@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace Slumber.Xml
@@ -20,18 +21,14 @@ namespace Slumber.Xml
 
     public class HttpXmlSerializer : ISerializer
     {
-        public string Serialize(IRequest request)
+        public Task Serialize(Stream stream, IRequest request)
         {
-            using (var stream = new MemoryStream())
+            return Task.Run(() =>
             {
-                if (request.Data == null) return null;
+                if (request.Data == null) return;
                 var serializer = new XmlSerializer(request.Data.GetType());
                 serializer.Serialize(stream, request.Data);
-                var buffer = new byte[stream.Length];
-                stream.Position = 0;
-                stream.Read(buffer, 0, buffer.Length);
-                return Encoding.UTF8.GetString(buffer, 0, buffer.Length);
-            }
+            });
         }
     }
 }

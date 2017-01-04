@@ -9,9 +9,18 @@ namespace Slumber.Multipart
             throw new NotImplementedException();
         }
 
-        public ISerializer CreateSerializer()
+        public ISerializer CreateSerializer(IRequest request)
         {
-            return new MultipartSerializer();
+            return CreateSerializer(request, DateTime.Now);
+        }
+
+        public ISerializer CreateSerializer(IRequest request, DateTime now)
+        {
+            request.RemoveHeader(HttpHeaders.ContentType);
+            var boundary = "---------------------------" + now.Ticks.ToString("x");
+            var header = $"multipart/form-data; boundary={boundary}";
+            request.AddHeader(HttpHeaders.ContentType, header);
+            return new MultipartSerializer(boundary);
         }
 
         public bool AppliesTo(string contentType)

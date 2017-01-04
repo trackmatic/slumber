@@ -56,6 +56,7 @@
     <Compile Include="Http\HttpPost.cs" />
     <Compile Include="Http\HttpRequest.cs" />
     <Compile Include="Http\HttpRequestBuilder.cs" />
+    <Compile Include="Http\IHttpContentWriter.cs" />
     <Compile Include="Http\IHttpInterceptor.cs" />
     <Compile Include="Http\IHttpMethod.cs" />
     <Compile Include="Http\IHttpPostProcessor.cs" />

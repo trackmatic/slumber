@@ -12,7 +12,7 @@
         /// When implemented it should return an implementation of ISerializer
         /// </summary>
         /// <returns></returns>
-        ISerializer CreateSerializer();
+        ISerializer CreateSerializer(IRequest request);
 
         /// <summary>
         /// When implemented it should return whether the supplied content type is supported or not

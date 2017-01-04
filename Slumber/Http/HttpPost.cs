@@ -18,15 +18,17 @@ namespace Slumber.Http
         {
             try
             {
-                var data = GetData(request);
+                var serializer = CreateSerializer(request);
                 var webRequest = CreateWebRequest(request);
                 var stream = await webRequest.GetRequestStreamAsync().ConfigureAwait(false);
                 var uri = _configuration.UriEncoder.Encode(request);
                 _configuration.Log.Debug(@"POST {0}", uri);
-                if (data != null)
+                if (serializer != null)
                 {
-                    var buffer = Encoding.UTF8.GetBytes(data);
-                    await stream.WriteAsync(buffer, 0, buffer.Length).ConfigureAwait(false);
+                    await serializer.Serialize(stream, request).ConfigureAwait(false);
+
+                    //var buffer = Encoding.UTF8.GetBytes(data);
+                    //stream.WriteAsync(buffer, 0, buffer.Length).ConfigureAwait(false);
                 }
                 var webResponse = await webRequest.GetResponseAsync().ConfigureAwait(false);
                 return webResponse.CreateResponse<T>(_configuration);
@@ -38,15 +40,17 @@ namespace Slumber.Http
             }
         }
 
-        private string GetData(IRequest request)
+        private ISerializer CreateSerializer(IRequest request)
         {
             if (request.Data == null || !request.ContainsHeader(Slumber.HttpHeaders.ContentType))
             {
                 return null;
             }
-            var data = _configuration.Serialization.CreateSerializer(request).Serialize(request);
-            _configuration.Log.Debug(data);
-            return data;
+            var serializer = _configuration.Serialization.CreateSerializer(request);
+            return serializer;
+            //.Serialize(request);
+            //_configuration.Log.Debug(data);
+            //return data;
         }
 
         private WebRequest CreateWebRequest(IRequest request)
