@@ -18,7 +18,7 @@ namespace Slumber.Tests.Multipart
             var request = HttpRequestBuilder<dynamic>.Post("/").Content(content).Build();
             var now = DateTime.Now;
             var result = serializer.Serialize(request, now);
-            var boundary = "------------" + now.Ticks.ToString("x") + "--";
+            var boundary = "-----------------------------" + now.Ticks.ToString("x") + "--";
             Assert.EndsWith(boundary, result);
         }
         public static byte[] GetBytes(Image img)

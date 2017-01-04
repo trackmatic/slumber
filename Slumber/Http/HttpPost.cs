@@ -16,16 +16,16 @@ namespace Slumber.Http
 
         public async Task<IResponse<T>> Execute<T>(IRequest request)
         {
-            var webRequest = CreateWebRequest(request);
             try
             {
+                var data = GetData(request);
+                var webRequest = CreateWebRequest(request);
                 var stream = await webRequest.GetRequestStreamAsync().ConfigureAwait(false);
-                if (request.Data != null && request.ContainsHeader(Slumber.HttpHeaders.ContentType))
+                var uri = _configuration.UriEncoder.Encode(request);
+                _configuration.Log.Debug(@"POST {0}", uri);
+                if (data != null)
                 {
-                    var json = _configuration.Serialization.CreateSerializer(request).Serialize(request);
-                    var uri = _configuration.UriEncoder.Encode(request);
-                    _configuration.Log.Debug(@"POST {0}\r\n\r\n{1}", uri, json);
-                    var buffer = Encoding.UTF8.GetBytes(json);
+                    var buffer = Encoding.UTF8.GetBytes(data);
                     await stream.WriteAsync(buffer, 0, buffer.Length).ConfigureAwait(false);
                 }
                 var webResponse = await webRequest.GetResponseAsync().ConfigureAwait(false);
@@ -36,6 +36,17 @@ namespace Slumber.Http
                 var handler = new ErrorHandler(_configuration.Serialization);
                 return handler.Handle<T>(e);
             }
+        }
+
+        private string GetData(IRequest request)
+        {
+            if (request.Data == null || !request.ContainsHeader(Slumber.HttpHeaders.ContentType))
+            {
+                return null;
+            }
+            var data = _configuration.Serialization.CreateSerializer(request).Serialize(request);
+            _configuration.Log.Debug(data);
+            return data;
         }
 
         private WebRequest CreateWebRequest(IRequest request)

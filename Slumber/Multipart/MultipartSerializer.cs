@@ -14,7 +14,7 @@ namespace Slumber.Multipart
         public string Serialize(IRequest request, DateTime now)
         {
             request.RemoveHeader(HttpHeaders.ContentType);
-            var boundary = "----------" + now.Ticks.ToString("x");
+            var boundary = "---------------------------" + now.Ticks.ToString("x");
             var header = $"multipart/form-data; boundary={boundary}";
             request.AddHeader(HttpHeaders.ContentType, header);
             var content = GetMultipartContent(request);
@@ -49,9 +49,10 @@ namespace Slumber.Multipart
 
                 foreach (var item in _content.FormData)
                 {
+                    data.AppendLine();
                     data.Append(_boundary);
                     data.AppendLine();
-                    data.AppendFormat("Content-Disposition: form-data; name={0}", item.Key);
+                    data.AppendFormat("Content-Disposition: form-data; name=\"{0}\"", item.Key);
                     data.AppendLine();
                     data.AppendLine();
                     data.Append(item.Value);
@@ -60,10 +61,11 @@ namespace Slumber.Multipart
 
                 foreach (var item in _content.Files)
                 {
+                    data.AppendLine();
                     data.Append(_boundary);
                     data.AppendLine();
                     data.AppendFormat("Content-Disposition: form-data; name=\"{0}\";", item.Key);
-                    data.AppendFormat(" filename=\"{0}\";", item.Value.Filename);
+                    data.AppendFormat(" filename=\"{0}\"", item.Value.Filename);
                     data.AppendLine();
                     data.AppendFormat("Content-Type: {0}", item.Value.ContentType);
                     data.AppendLine();
@@ -71,10 +73,12 @@ namespace Slumber.Multipart
                     data.Append(Encoding.UTF8.GetString(item.Value.Data));
                     data.AppendLine();
                 }
-
+                
                 data.AppendFormat("--{0}--", _boundary);
+                data.AppendLine();
 
-                return data.ToString();
+                var result = data.ToString();
+                return result;
             }
         }
     }
