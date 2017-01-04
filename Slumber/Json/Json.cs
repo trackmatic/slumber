@@ -41,7 +41,7 @@ namespace Slumber.Json
         {
             if (request.Data == null) return null;
             var data = JsonConvert.SerializeObject(request.Data, Formatting.Indented, _settings);
-            _logger.Debug(data);
+            _logger.Debug("Data: {0}", data);
             var buffer = Encoding.UTF8.GetBytes(data);
             return stream.WriteAsync(buffer, 0, buffer.Length);
         }

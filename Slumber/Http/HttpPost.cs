@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Slumber.Http
@@ -26,9 +25,6 @@ namespace Slumber.Http
                 if (serializer != null)
                 {
                     await serializer.Serialize(stream, request).ConfigureAwait(false);
-
-                    //var buffer = Encoding.UTF8.GetBytes(data);
-                    //stream.WriteAsync(buffer, 0, buffer.Length).ConfigureAwait(false);
                 }
                 var webResponse = await webRequest.GetResponseAsync().ConfigureAwait(false);
                 return webResponse.CreateResponse<T>(_configuration);
@@ -48,9 +44,6 @@ namespace Slumber.Http
             }
             var serializer = _configuration.Serialization.CreateSerializer(request);
             return serializer;
-            //.Serialize(request);
-            //_configuration.Log.Debug(data);
-            //return data;
         }
 
         private WebRequest CreateWebRequest(IRequest request)
