@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using Newtonsoft.Json;
 using Slumber.Http;
-using Slumber.Json;
 using Slumber.Logging;
 using Slumber.Multipart;
 using Slumber.Xml;
@@ -13,7 +11,7 @@ namespace Slumber.Sample
     {
         static void Main(string[] args)
         {
-            /*var client = new SlumberClient("http://api.fixer.io", slumber =>
+            var client = new SlumberClient("http://api.fixer.io", slumber =>
             {
                 slumber.UseJsonSerialization().UseXmlSerialization().UseHttp(http => http.UseJsonAsDefaultContentType()).UseConsoleLogger();
             });
@@ -26,25 +24,7 @@ namespace Slumber.Sample
             // Using Defined Types
 
             var typedRequest = HttpRequestBuilder<ExchangeRates>.Get("/latest").QueryParameter("base", "USD").Build();
-            var typesResult = client.ExecuteAsync(typedRequest).Result.Data;*/
-
-            var client = new SlumberClient("http://ps.uci.edu/~franklin/doc", slumber =>
-            {
-                slumber.UseMultipartSerialization()
-                    .UseJsonSerialization()
-                    .UseXmlSerialization()
-                    .UseHttp(http => http.UseJsonAsDefaultContentType())
-                    .UseConsoleLogger();
-            });
-
-
-            var content = new MultipartContent();
-            content.FormData.Add("id", "1");
-            content.Files.Add("file", new MultipartFile("file.png", "image/png", File.ReadAllBytes("file.png")));
-
-            var dynamicRequest = HttpRequestBuilder<dynamic>.Post("/file_upload.html").Content(content).Build();
-
-            var response = client.ExecuteAsync(dynamicRequest).Result;
+            var typesResult = client.ExecuteAsync(typedRequest).Result.Data;
         }
 
         public class ExchangeRates
