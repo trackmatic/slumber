@@ -65,6 +65,7 @@ namespace Slumber.Http
                 {
                     http.Headers.Add(new HttpHeader(name, webResponse.Headers[name]));
                 }
+
                 using (var stream = webResponse.GetResponseStream())
                 {
                     if (stream == null)

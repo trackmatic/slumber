@@ -39,6 +39,7 @@ namespace Slumber.Http
                     return NewResponseFromException<T>(e);
                 }
 
+
                 using (var reader = new StreamReader(stream))
                 {
                     var content = reader.ReadToEnd();
@@ -47,6 +48,12 @@ namespace Slumber.Http
                     {
                         StatusCode = (int)((HttpWebResponse)e.Response).StatusCode
                     };
+
+                    foreach (var name in e.Response.Headers.AllKeys)
+                    {
+                        http.Headers.Add(new HttpHeader(name, e.Response.Headers[name]));
+                    }
+
                     if (string.IsNullOrEmpty(content))
                     {
                         http.SetException(new SlumberException(e));
