@@ -2,7 +2,7 @@
 {
     public static class ConfigurationExtensions
     {
-        public static ISlumberConfiguration UseJsonSerialization(this ISlumberConfiguration configuration)
+        public static ISlumberConfiguration UseMultipartSerialization(this ISlumberConfiguration configuration)
         {
             configuration.Serialization.Register(new MultipartSerializerFactory());
             return configuration;

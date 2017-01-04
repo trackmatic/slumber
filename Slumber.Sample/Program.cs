@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 using Slumber.Http;
+using Slumber.Json;
 using Slumber.Logging;
-using Slumber.Multipart;
 using Slumber.Xml;
 
 namespace Slumber.Sample
