@@ -4,7 +4,7 @@
     {
         public static ISlumberConfiguration UseXmlSerialization(this ISlumberConfiguration configuration)
         {
-            configuration.Serialization.Register(new XmlSerializerFactory());
+            configuration.Serialization.Register(ContentTypes.ApplicationXml, new XmlSerializerFactory());
             return configuration;
         }
     }

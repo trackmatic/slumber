@@ -4,7 +4,7 @@
     {
         public static ISlumberConfiguration UseMultipartSerialization(this ISlumberConfiguration configuration)
         {
-            configuration.Serialization.Register(new MultipartSerializerFactory());
+            configuration.Serialization.Register(ContentTypes.MultipartFormData, new MultipartSerializerFactory());
             return configuration;
         }
     }

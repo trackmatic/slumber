@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 using Slumber.Http;
-using Slumber.Json;
 using Slumber.Logging;
-using Slumber.Xml;
 
 namespace Slumber.Sample
 {
@@ -11,15 +9,18 @@ namespace Slumber.Sample
     {
         static void Main(string[] args)
         {
-            var client = new SlumberClient("http://api.fixer.io", slumber =>
+            var client = new SlumberClient(SlumberConfigurationFactory.Default("http://api.fixer.io", configure: slumber =>
             {
-                slumber.UseJsonSerialization().UseXmlSerialization().UseHttp(http => http.UseJsonAsDefaultContentType()).UseConsoleLogger();
-            });
+                slumber.UseConsoleLogger();
+                slumber.Serialization.Register(ContentTypes.TextHtml, slumber.Serialization.GetFactory(ContentTypes.ApplicationJson));
+            }));
 
             // Using Dynamic Types
 
             var dynamicRequest = HttpRequestBuilder<dynamic>.Get("/latest").QueryParameter("base", "USD").Build();
             var dynamicResult = client.ExecuteAsync(dynamicRequest).Result;
+
+            var d = dynamicResult.Data;
 
             // Using Defined Types
 

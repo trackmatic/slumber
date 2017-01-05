@@ -1,21 +1,14 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Slumber
 {
     public class SlumberClient : ISlumberClient
     {
         private readonly ISlumberConfiguration _configuration;
-
-        public SlumberClient(string baseUri, Action<ISlumberConfiguration> configure) : this(baseUri, TimeSpan.FromMinutes(1), configure)
+        
+        public SlumberClient(ISlumberConfiguration configuration)
         {
-            
-        }
-
-        public SlumberClient(string baseUri, TimeSpan timeout, Action<ISlumberConfiguration> configure)
-        {
-            _configuration = new SlumberConfiguration(baseUri, timeout);
-            configure(_configuration);
+            _configuration = configuration;
         }
 
         public Task<IResponse<T>> ExecuteAsync<T>(IRequest<T> request)

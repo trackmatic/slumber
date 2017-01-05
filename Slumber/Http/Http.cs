@@ -96,13 +96,13 @@ namespace Slumber.Http
 
         public Http UseJsonAsDefaultContentType()
         {
-            SetDefaultContentType("application/json");
+            SetDefaultContentType(ContentTypes.ApplicationJson);
             return this;
         }
 
         public Http UseXmlAsDefaultContentType()
         {
-            SetDefaultContentType("application/xml");
+            SetDefaultContentType(ContentTypes.ApplicationXml);
             return this;
         }
 

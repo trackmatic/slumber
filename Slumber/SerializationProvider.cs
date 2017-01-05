@@ -1,24 +1,39 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
+using System.Collections.Generic;
 
 namespace Slumber
 {
     public class SerializationProvider : ISerializationProvider
     {
         private readonly string ContentTypeHeader = HttpHeaders.ContentType;
-
-        private readonly List<ISerializationFactory> _factories;
+        private readonly Dictionary<string, ISerializationFactory> _factories;
 
         public SerializationProvider()
         {
-            _factories = new List<ISerializationFactory>();
+            _factories = new Dictionary<string, ISerializationFactory>();
         }
 
-        public void Register(ISerializationFactory factory)
+        public void Register(string contentType, ISerializationFactory factory)
         {
-            _factories.Add(factory);
+            if (_factories.ContainsKey(contentType))
+            {
+                throw new SlumberException($"Multiple serializaction factories were found for content-type {contentType}");
+            }
+            _factories.Add(contentType, factory);
         }
-        
+
+        public void Remove(string contentType)
+        {
+            var key = EnsureFactoryExistsForContentType(contentType);
+            _factories.Remove(key);
+        }
+
+        public ISerializationFactory GetFactory(string contentType)
+        {
+            var key = EnsureFactoryExistsForContentType(contentType);
+            return _factories[key];
+        }
+
         public ISerializer CreateSerializer(IRequest request)
         {
             var factory = GetFactory(request);
@@ -34,32 +49,33 @@ namespace Slumber
         private ISerializationFactory GetFactory(IHeaders headers)
         {
             var contentType = GetContentType(headers);
-            var factories = _factories.Where(x => x.AppliesTo(contentType)).ToList();
-            if (!factories.Any())
-            {
-                throw new SlumberException($"A serialization factory could not be found for content-type {contentType}");
-            }
-            if (factories.Count > 1)
-            {
-                throw new SlumberException($"Multiple serializaction factories were found for content-type {contentType}");
-            }
-            return factories[0];
+            var factory = GetFactory(contentType);
+            return factory;
         }
 
         private string GetContentType(IHeaders headers)
         {
-            EnsureContentTypeExists(headers);
+            EnsureContentTypeHeadersExists(headers);
             return headers.GetHeader(ContentTypeHeader).Value;
         }
 
-        private void EnsureContentTypeExists(IHeaders headers)
+        private void EnsureContentTypeHeadersExists(IHeaders headers)
         {
             if (headers.ContainsHeader(ContentTypeHeader))
             {
                 return;
             }
-
             throw new SlumberException("A serializer cannot be retrieved if a content-type header is not present");
+        }
+
+        private string EnsureFactoryExistsForContentType(string contentType)
+        {
+            var key = _factories.Keys.Where(contentType.Contains).FirstOrDefault();
+            if (key != null)
+            {
+                return key;
+            }
+            throw new SlumberException($"A serialization factory could not be found for content-type {contentType}");
         }
     }
 }

@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContentTypes.cs" />
     <Compile Include="DefaultUriEncoder.cs" />
     <Compile Include="Http\ConfigurationExtensions.cs" />
     <Compile Include="Http\ErrorHandler.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="SerializationProvider.cs" />
     <Compile Include="SlumberClient.cs" />
     <Compile Include="SlumberConfiguration.cs" />
+    <Compile Include="SlumberConfigurationFactory.cs" />
     <Compile Include="SlumberException.cs" />
     <Compile Include="NullLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

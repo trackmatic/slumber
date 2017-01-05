@@ -22,10 +22,5 @@ namespace Slumber.Multipart
             request.AddHeader(HttpHeaders.ContentType, header);
             return new MultipartSerializer(boundary);
         }
-
-        public bool AppliesTo(string contentType)
-        {
-            return contentType.Contains("multipart/form-data");
-        }
     }
 }

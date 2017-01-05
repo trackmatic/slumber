@@ -4,6 +4,8 @@
     {
         ISerializer CreateSerializer(IRequest request);
         IDeserializer CreateDeserializer(IResponse response);
-        void Register(ISerializationFactory factory);
+        void Register(string contentType, ISerializationFactory factory);
+        void Remove(string contentType);
+        ISerializationFactory GetFactory(string contentType);
     }
 }

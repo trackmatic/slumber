@@ -4,7 +4,7 @@ namespace Slumber
 {
     public class SlumberConfiguration : ISlumberConfiguration
     {
-        public SlumberConfiguration(string baseUri, TimeSpan timeout)
+        internal SlumberConfiguration(string baseUri, TimeSpan timeout)
         {
             BaseUri = baseUri;
             Timeout = timeout;

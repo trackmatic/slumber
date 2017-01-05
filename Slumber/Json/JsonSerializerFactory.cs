@@ -22,11 +22,6 @@ namespace Slumber.Json
             return new DynamicJsonSerializer(_settings, _logger);
         }
 
-        public bool AppliesTo(string contentType)
-        {
-            return contentType.Contains("application/json");
-        }
-
         public IDeserializer CreateDeserializer()
         {
             return new DynamicJsonDeserializer(_settings);
