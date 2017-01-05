@@ -60,7 +60,7 @@ namespace Slumber.Http
                     }
                     else
                     {
-                        http.SetException(new UpstreamException(content));
+                        http.SetException(new SlumberUpstreamException(content));
                     }
                     return http;
                 }

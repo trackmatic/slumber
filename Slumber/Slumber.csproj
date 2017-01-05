@@ -102,7 +102,7 @@
     <Compile Include="HttpMethods.cs" />
     <Compile Include="QueryParameter.cs" />
     <Compile Include="Response.cs" />
-    <Compile Include="UpstreamException.cs" />
+    <Compile Include="SlumberUpstreamException.cs" />
     <Compile Include="Xml\ConfigurationExtensions.cs" />
     <Compile Include="Xml\Xml.cs" />
     <Compile Include="Xml\XmlSerializerFactory.cs" />

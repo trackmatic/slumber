@@ -18,5 +18,10 @@ namespace Slumber
         {
             throw new NotSupportedException();
         }
+
+        public override string ToString()
+        {
+            return Message;
+        }
     }
 }

@@ -80,7 +80,7 @@ namespace Slumber.Http
                         http.StatusCode = (int)httpWebResponse.StatusCode;
                         if (configuration.IsError(http.StatusCode))
                         {
-                            http.SetException(new UpstreamException(http.Content));
+                            http.SetException(new SlumberUpstreamException(http.Content));
                         }
                     }
                 }
