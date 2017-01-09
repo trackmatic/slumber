@@ -44,3 +44,8 @@ Out of the box you get an http implementation built on top of System.Web. Custom
 
     var request = HttpRequestBuilder<ExchangeRate>.Get("/latest").QueryParameter("base", "USD").Build();
     var response = client.ExecuteAsync(dynamicRequest);
+
+## Path based query parameters
+
+    var request = HttpRequestBuilder<ExchangeRate>.Get("/latest/{id}").QueryParameter("id", "value").Build();
+    var response = client.ExecuteAsync(dynamicRequest);
