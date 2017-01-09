@@ -1,6 +1,6 @@
 ﻿using Slumber.Multipart;
 
-namespace Slumber.Http
+namespace Slumber
 {
     public class HttpRequestBuilder<T>
     {
@@ -70,7 +70,7 @@ namespace Slumber.Http
 
         public HttpRequestBuilder<T> WithContentType(string type)
         {
-            var header = Slumber.HttpHeaders.ContentType;
+            var header = HttpHeaders.ContentType;
             _httpRequest.RemoveHeader(header);
             _httpRequest.AddHeader(header, type);
             return this;

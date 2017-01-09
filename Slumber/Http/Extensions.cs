@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Slumber.Http
 {
-    public static class Extensions
+    internal static class Extensions
     {
         private static readonly List<string> RestricedHeaders = new List<string>
         {

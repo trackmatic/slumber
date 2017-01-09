@@ -2,7 +2,9 @@
 
 # Modular Rest Client Library for .Net
 
-Slumber is a modular rest client library which allows you to swap out each component to meet your requirements
+Slumber is a modular rest client library built to provide a flexible framework to create client libraries for any rest api.
+
+Out of the box you get an http implementation built on top of System.Web. Custom implementations can be developed by implmenting the IHttp interface.
 
 ## Install With NuGet
 

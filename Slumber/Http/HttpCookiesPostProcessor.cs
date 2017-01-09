@@ -2,7 +2,7 @@
 
 namespace Slumber.Http
 {
-    public class HttpCookiesPostProcessor : IHttpPostProcessor
+    internal class HttpCookiesPostProcessor : IHttpPostProcessor
     {
         public void OnExecuted(IHttp http, IRequest request, IResponse response)
         {

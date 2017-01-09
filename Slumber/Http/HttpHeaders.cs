@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Slumber.Http
 {
-    public class HttpHeaders
+    internal class HttpHeaders
     {
         private static readonly List<HttpHeader> Empty = new List<HttpHeader>();
         private readonly Dictionary<string, List<HttpHeader>> _headers;

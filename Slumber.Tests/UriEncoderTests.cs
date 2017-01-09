@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Moq;
-using Slumber.Http;
 using Xunit;
 
 namespace Slumber.Tests
@@ -10,8 +9,8 @@ namespace Slumber.Tests
         [Fact]
         public void ItShouldGenerateValidUris()
         {
-
-            var restQueryParameterEncoder = new HttpParameterEncoder();
+            var configuration = SlumberConfigurationFactory.Default("http://test.bla");
+            var restQueryParameterEncoder = configuration.UriEncoder.ParameterEncoder;
             var request = new Mock<IRequest>();
             request.Setup(x => x.Query).Returns(new List<QueryParameter>
                 {

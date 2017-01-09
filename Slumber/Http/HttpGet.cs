@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Slumber.Http
 {
-    public class HttpGet : IHttpMethod
+    internal class HttpGet : IHttpMethod
     {
         private readonly ISlumberConfiguration _configuration;
 

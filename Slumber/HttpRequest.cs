@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Slumber.Http
+namespace Slumber
 {
     public class HttpRequest<T> : IRequest<T>
     {

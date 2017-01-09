@@ -2,7 +2,7 @@
 
 namespace Slumber.Http
 {
-    public class HttpCookies
+    internal class HttpCookies
     {
         private readonly List<HttpCookie> _cookies;
 

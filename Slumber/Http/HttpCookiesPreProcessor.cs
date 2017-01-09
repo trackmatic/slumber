@@ -1,6 +1,6 @@
 ﻿namespace Slumber.Http
 {
-    public class HttpCookiesPreProcessor : IHttpPreProcessor
+    internal class HttpCookiesPreProcessor : IHttpPreProcessor
     {
         public void OnExecuting(IHttp http, IRequest request)
         {

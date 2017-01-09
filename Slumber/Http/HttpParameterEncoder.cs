@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Slumber.Http
 {
-    public class HttpParameterEncoder : IParameterEncoder
+    internal class HttpParameterEncoder : IParameterEncoder
     {
         private readonly List<IEncoder> _encoders;
 

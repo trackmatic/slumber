@@ -1,5 +1,4 @@
-﻿using Slumber.Http;
-using Xunit;
+﻿using Xunit;
 
 namespace Slumber.Tests.Http
 {
@@ -8,7 +7,8 @@ namespace Slumber.Tests.Http
         [Fact]
         public void ItShouldEncodeQueryParameters()
         {
-            var encoder = new HttpParameterEncoder();
+            var configuration = SlumberConfigurationFactory.Default("http://test.bla");
+            var encoder = configuration.UriEncoder.ParameterEncoder;
             var parameter = new QueryParameter
             {
                 Name = "key",

@@ -4,7 +4,7 @@ using System.Net;
 
 namespace Slumber.Http
 {
-    public class ErrorHandler
+    internal class ErrorHandler
     {
         private readonly ISerializationProvider _deserializer;
 

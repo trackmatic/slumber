@@ -43,5 +43,7 @@ namespace Slumber
             var join = string.Concat(path, sb.ToString());
             return join.TrimEnd('&').TrimEnd('?');
         }
+
+        public IParameterEncoder ParameterEncoder => _parameterEncoder;
     }
 }
