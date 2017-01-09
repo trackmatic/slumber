@@ -65,7 +65,7 @@ namespace Slumber.Http
 
         public HttpRequestBuilder<T> Content(IMultipartContent content)
         {
-            return WithContentType("multipart/form-data").Content((object)content);
+            return WithContentType(ContentTypes.MultipartFormData).Content((object)content);
         }
 
         public HttpRequestBuilder<T> WithContentType(string type)
