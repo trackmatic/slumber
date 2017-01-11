@@ -22,7 +22,7 @@ Out of the box you get an http implementation built on top of System.Web. Custom
         slumber.Serialization.Register(ContentTypes.TextHtml, slumber.Serialization.GetFactory(ContentTypes.ApplicationJson));
     }));
 
-## Create and Execute a Request
+## Create and execute a request
 
     var request = HttpRequestBuilder<dynamic>.Get("/latest").QueryParameter("base", "USD").Build(); 
     var response = client.Execute(request);
@@ -38,14 +38,14 @@ Out of the box you get an http implementation built on top of System.Web. Custom
 ## Dynamic deserialization
 
     var request = HttpRequestBuilder<dynamic>.Get("/latest").QueryParameter("base", "USD").Build();
-    var response = client.ExecuteAsync(dynamicRequest);
+    var response = client.ExecuteAsync(request);
 
 ## Typed deserialization
 
     var request = HttpRequestBuilder<ExchangeRate>.Get("/latest").QueryParameter("base", "USD").Build();
-    var response = client.ExecuteAsync(dynamicRequest);
+    var response = client.ExecuteAsync(request);
 
-## Path based query parameters
+## Inline path query parameters
 
     var request = HttpRequestBuilder<ExchangeRate>.Get("/latest/{id}").QueryParameter("id", "value").Build();
-    var response = client.ExecuteAsync(dynamicRequest);
+    var response = client.ExecuteAsync(request);
