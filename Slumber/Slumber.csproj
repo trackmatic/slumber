@@ -57,6 +57,8 @@
     <Compile Include="Http\HttpPost.cs" />
     <Compile Include="HttpRequest.cs" />
     <Compile Include="HttpRequestBuilder.cs" />
+    <Compile Include="Http\HttpTimeoutException.cs" />
+    <Compile Include="Http\HttpWebRequestFactory.cs" />
     <Compile Include="Http\IHttpInterceptor.cs" />
     <Compile Include="Http\IHttpMethod.cs" />
     <Compile Include="Http\IHttpPostProcessor.cs" />

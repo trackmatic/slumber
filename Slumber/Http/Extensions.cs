@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Slumber.Http
 {
@@ -90,6 +91,18 @@ namespace Slumber.Http
                 http.SetException(new SlumberException(e));
             }
             return http;
+        }
+
+        public static async Task<T> WithTimeout<T>(this Task<T> task, TimeSpan duration, Func<Exception> handler)
+        {
+            var retTask = await Task.WhenAny(task, Task.Delay(duration)).ConfigureAwait(false);
+
+            if (retTask is Task<T>)
+            {
+                return task.Result;
+            }
+
+            throw handler();
         }
     }
 }

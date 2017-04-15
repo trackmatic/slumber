@@ -16,11 +16,17 @@ namespace Slumber.Http
         public async Task<IResponse<T>> Execute<T>(IRequest request)
         {
             var uri = _configuration.UriEncoder.Encode(request);
-            var webRequest = NewWebRequest(request, uri);
+            var webRequest = CreateWebRequest(request, uri);
             _configuration.Log.Debug(@"GET {0}", uri);
             try
             {
-                var webResponse = await webRequest.GetResponseAsync().ConfigureAwait(false);
+                var timeoutHandler = new Func<Exception>(() =>
+                {
+                    webRequest.Abort();
+                    return new HttpTimeoutException($"Host did not respond within {_configuration.ConnectTimeout}, the connection has been aborted");
+                });
+
+                var webResponse = await webRequest.GetResponseAsync().WithTimeout(_configuration.ConnectTimeout, timeoutHandler).ConfigureAwait(false);
                 return webResponse.CreateResponse<T>(_configuration);
             }
             catch (Exception e)
@@ -30,23 +36,15 @@ namespace Slumber.Http
             }
         }
 
-        protected virtual HttpWebRequest NewWebRequest(IRequest request, string uri)
+        protected virtual HttpWebRequest CreateWebRequest(IRequest request, string uri)
         {
-            var webRequest = WebRequest.Create(_configuration.BaseUri.Trim('/') + uri);
-            if (_configuration.Timeout > TimeSpan.Zero)
-            {
-                webRequest.Timeout = (int) _configuration.Timeout.TotalMilliseconds;
-            }
-            var httpWebRequest = (HttpWebRequest)webRequest;
             var accept = request.GetHeader(Slumber.HttpHeaders.Accept);
             if (accept == null)
             {
                 throw new InvalidOperationException("Accept header is required for a GET request");
             }
-            httpWebRequest.CookieContainer = httpWebRequest.CookieContainer ?? new CookieContainer();
+            var httpWebRequest = HttpWebRequestFactory.CreateHttpWebRequest(request, uri, _configuration);
             httpWebRequest.Accept = accept.Value;
-            httpWebRequest.AppendCookies(request.Cookies);
-            httpWebRequest.AppendHeaders(request.Headers);
             return httpWebRequest;
         }
     }

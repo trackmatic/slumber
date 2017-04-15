@@ -19,7 +19,14 @@ namespace Slumber.Http
             {
                 var serializer = CreateSerializer(request);
                 var webRequest = CreateWebRequest(request);
-                var stream = await webRequest.GetRequestStreamAsync().ConfigureAwait(false);
+                
+                var timeoutHandler = new Func<Exception>(() =>
+                {
+                    webRequest.Abort();
+                    return new HttpTimeoutException($"Host did not respond within {_configuration.ConnectTimeout}, the connection has been aborted");
+                });
+
+                var stream = await webRequest.GetRequestStreamAsync().WithTimeout(_configuration.ConnectTimeout, timeoutHandler).ConfigureAwait(false);
                 var uri = _configuration.UriEncoder.Encode(request);
                 _configuration.Log.Debug(@"POST {0}", uri);
                 if (serializer != null)
@@ -49,27 +56,26 @@ namespace Slumber.Http
         private WebRequest CreateWebRequest(IRequest request)
         {
             var uri = _configuration.UriEncoder.Encode(request);
-            var webRequest = WebRequest.Create(_configuration.BaseUri.Trim('/') + uri);
-            webRequest.Method = request.Method;
-            if (request.Data != null)
+            var httpWebRequest = HttpWebRequestFactory.CreateHttpWebRequest(request, uri, _configuration);
+            EnsureContentTypeHasBeenProvidedWhenRequired(request, httpWebRequest);
+            httpWebRequest.PreAuthenticate = true;
+            return httpWebRequest;
+        }
+
+        private void EnsureContentTypeHasBeenProvidedWhenRequired(IRequest request, HttpWebRequest httpWebRequest)
+        {
+            if (request.Data == null)
             {
-                var contentType = request.GetHeader(Slumber.HttpHeaders.ContentType);
-                if (contentType == null)
-                {
-                    throw new SlumberException("Content-Type header is required when data is present");
-                }
-                webRequest.ContentType = contentType.Value;
+                return;
             }
-            if (_configuration.Timeout > TimeSpan.Zero)
+
+            var contentType = request.GetHeader(Slumber.HttpHeaders.ContentType);
+            if (contentType == null)
             {
-                webRequest.Timeout = (int) _configuration.Timeout.TotalMilliseconds;
+                throw new SlumberException("Content-Type header is required when data is present");
             }
-            webRequest.PreAuthenticate = true;
-            var httpWebRequest = (HttpWebRequest)webRequest;
-            httpWebRequest.CookieContainer = httpWebRequest.CookieContainer ?? new CookieContainer();
-            httpWebRequest.AppendCookies(request.Cookies);
-            httpWebRequest.AppendHeaders(request.Headers);
-            return webRequest;
+
+            httpWebRequest.ContentType = contentType.Value;
         }
     }
 }

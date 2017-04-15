@@ -18,6 +18,11 @@ namespace Slumber
         TimeSpan Timeout { get; }
 
         /// <summary>
+        /// Timeout value for connection portion of request
+        /// </summary>
+        TimeSpan ConnectTimeout { get; }
+
+        /// <summary>
         /// An instance of a logger
         /// </summary>
         ILogger Log { get; set; }

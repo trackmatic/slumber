@@ -4,17 +4,19 @@ namespace Slumber
 {
     public class SlumberConfiguration : ISlumberConfiguration
     {
-        internal SlumberConfiguration(string baseUri, TimeSpan timeout)
+        internal SlumberConfiguration(string baseUri, TimeSpan timeout, TimeSpan connectTimeout)
         {
             BaseUri = baseUri;
             Timeout = timeout;
             Log = new NullLogger();
             Serialization = new SerializationProvider();
+            ConnectTimeout = connectTimeout;
         }
 
         public string BaseUri { get; }
 
         public TimeSpan Timeout { get; }
+        public TimeSpan ConnectTimeout { get; }
 
         public ILogger Log { get; set; }
 
