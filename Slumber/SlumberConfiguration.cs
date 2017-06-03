@@ -11,6 +11,7 @@ namespace Slumber
             Log = new NullLogger();
             Serialization = new SerializationProvider();
             ConnectTimeout = connectTimeout;
+            UserAgent = () => "Slumber/1.0";
         }
 
         public string BaseUri { get; }
@@ -53,5 +54,7 @@ namespace Slumber
         {
             return code == -1 || code >= 400;
         }
+
+        public Func<string> UserAgent { get; set; }
     }
 }

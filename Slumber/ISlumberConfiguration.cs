@@ -53,5 +53,10 @@ namespace Slumber
         /// <param name="code"></param>
         /// <returns></returns>
         bool IsError(int code);
+
+        /// <summary>
+        /// Provides a hook to generate the user agent header
+        /// </summary>
+        Func<string> UserAgent { get; set; }
     }
 }

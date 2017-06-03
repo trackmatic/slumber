@@ -12,6 +12,7 @@ namespace Slumber.Http
             httpWebRequest.AppendCookies(request.Cookies);
             httpWebRequest.AppendHeaders(request.Headers);
             httpWebRequest.Method = request.Method;
+            httpWebRequest.UserAgent = configuration.UserAgent?.Invoke();
             return httpWebRequest;
         }
     }
