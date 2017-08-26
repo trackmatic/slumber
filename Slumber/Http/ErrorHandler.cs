@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 
 namespace Slumber.Http
@@ -17,12 +18,28 @@ namespace Slumber.Http
         {
             try
             {
-                return e is WebException ? NewResponseFromWebException<T>(e as WebException) : NewResponseFromException<T>(e);
+                return TryHandleWebException<T>(e) ?? NewResponseFromException<T>(e);
             }
             catch (Exception ex)
             {
                 return NewResponseFromException<T>(ex);
             }
+        }
+
+        private Response<T> TryHandleWebException<T>(Exception e)
+        {
+            var we = TryExtractWebException(e);
+            return we == null ? null : NewResponseFromWebException<T>(we);
+        }
+
+        private WebException TryExtractWebException(Exception e)
+        {
+            return e as WebException ?? TryExtractWebException(e as AggregateException);
+        }
+
+        private WebException TryExtractWebException(AggregateException e)
+        {
+            return e?.InnerExceptions.Where(x => x is WebException).Cast<WebException>().FirstOrDefault();
         }
 
         private Response<T> NewResponseFromWebException<T>(WebException e)
