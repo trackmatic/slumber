@@ -1,9 +1,16 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace Slumber
 {
+    [Serializable]
     public class SlumberException : Exception
     {
+        public SlumberException(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+
+        }
+
         public SlumberException(Exception e) : base(e.Message, e)
         {
             

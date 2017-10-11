@@ -1,7 +1,16 @@
-﻿namespace Slumber
+﻿using System;
+using System.Runtime.Serialization;
+
+namespace Slumber
 {
+    [Serializable]
     public class SlumberUpstreamException : SlumberException
     {
+        public SlumberUpstreamException(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+
+        }
+
 
         public SlumberUpstreamException(string content)
             : base("An upstream error occured, please refer to the Content property for more information")
