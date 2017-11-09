@@ -7,11 +7,11 @@ namespace Slumber.Json
     public class JsonSerializerFactory : ISerializationFactory
     {
         private readonly JsonSerializerSettings _settings;
-        private readonly ILogger _logger;
+        private readonly ISlumberConfiguration _configuration;
 
-        public JsonSerializerFactory(ILogger logger, Action<JsonSerializerSettings> customise = null)
+        public JsonSerializerFactory(ISlumberConfiguration configuration, Action<JsonSerializerSettings> customise = null)
         {
-            _logger = logger;
+            _configuration = configuration;
             _settings = new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
             _settings.Converters.Add(new IsoDateTimeConverter());
             customise?.Invoke(_settings);
@@ -19,7 +19,7 @@ namespace Slumber.Json
 
         public ISerializer CreateSerializer(IRequest request)
         {
-            return new DynamicJsonSerializer(_settings, _logger);
+            return new DynamicJsonSerializer(_settings, _configuration);
         }
 
         public IDeserializer CreateDeserializer()

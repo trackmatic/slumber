@@ -23,25 +23,19 @@ namespace Slumber.Json
     public class DynamicJsonSerializer : ISerializer
     {        
         private readonly JsonSerializerSettings _settings;
-        private readonly ILogger _logger;
+        private readonly ISlumberConfiguration _configuration;
 
-        public DynamicJsonSerializer(JsonSerializerSettings settings, ILogger logger)
+        public DynamicJsonSerializer(JsonSerializerSettings settings, ISlumberConfiguration configuration)
         {
             _settings = settings;
-            _logger = logger;
-        }
-
-        public string Serialize(IRequest request)
-        {
-            if (request.Data == null) return null;
-            return JsonConvert.SerializeObject(request.Data, Formatting.Indented, _settings);
+            _configuration = configuration;
         }
 
         public Task Serialize(Stream stream, IRequest request)
         {
             if (request.Data == null) return null;
             var data = JsonConvert.SerializeObject(request.Data, Formatting.Indented, _settings);
-            _logger.Debug("Data: {0}", data);
+            _configuration?.Log?.Debug("Data: {0}", data);
             var buffer = Encoding.UTF8.GetBytes(data);
             return stream.WriteAsync(buffer, 0, buffer.Length);
         }
