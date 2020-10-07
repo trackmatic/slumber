@@ -12,7 +12,7 @@ namespace Slumber
         public HttpCookie(string cookie)
         {
             _cookie = cookie;
-            _values = cookie.Split(';').Select(x => x.Trim().Split('=')).ToDictionary(x => x[0], x => x.Length == 1 ? string.Empty : x[1]);
+            _values = cookie.Split(';').Select(x => x.Trim().Split('=')).GroupBy(x => x[0]).Select(x => x.First()).ToDictionary(x => x[0], x => x.Length == 1 ? string.Empty : x[1]);
         }
 
         public string GetName()

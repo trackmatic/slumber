@@ -5,6 +5,7 @@ properties {
     $nspec_runner = "$base_dir\packages\nspec.1.0.1\tools\NSpecRunner.exe"
     $destination_dir = $output
     $nuget = "$base_dir\.nuget\NuGet.exe"
+    $nuget_source = "https://api.nuget.org/v3/index.json"
 }
 
 Task default -depends Clean, Restore, Build, Test
@@ -19,6 +20,7 @@ Task Publish-Nuget-Package {
 	$version = $spec.package.metadata.version
 	$package = "$base_dir/Slumber.$version.nupkg"
     $package_dir = "$base_dir/Slumber/bin/package"
+	$source = $nuget_source
     
     # Prepare package folder
     remove-item $package_dir -R -ErrorAction SilentlyContinue
@@ -35,8 +37,8 @@ Task Publish-Nuget-Package {
     # Create nuget package and upload to nuget
 	exec { & $nuget pack "$package_dir/Slumber.nuspec" }
     $apikey = Read-Host -Prompt 'Enter Api Key'
-    exec { & $nuget setApiKey $apikey }
-	exec { & $nuget push "$package" }
+    exec { & $nuget setApiKey $apikey -Source $source}
+	exec { & $nuget push "$package" -Source $source }
 
     # Perform some cleanup on the folder
 	remove-item $package
